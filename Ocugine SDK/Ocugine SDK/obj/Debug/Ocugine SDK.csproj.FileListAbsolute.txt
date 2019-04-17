@@ -1,0 +1,10 @@
+D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\bin\Debug\Ocugine SDK.dll
+D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\bin\Debug\Ocugine SDK.pdb
+D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.csprojAssemblyReference.cache
+D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.csproj.CoreCompileInputs.cache
+D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.dll
+D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.pdb
+D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\bin\Debug\Newtonsoft.Json.dll
+D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\bin\Debug\Newtonsoft.Json.pdb
+D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\bin\Debug\Newtonsoft.Json.xml
+D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.csproj.CopyComplete
