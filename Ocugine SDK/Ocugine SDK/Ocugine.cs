@@ -55,6 +55,7 @@ namespace Ocugine_SDK
         public Perfomance perfomance;                   // Perfomance Services
         public Backoffice office;                       // Office Services
         public Localization locale;                     // Locale Services
+        public UI ui;                                   // UI Module
         public Utils utils;                             // SDK Utils
 
         // Private Class Params
@@ -122,6 +123,25 @@ namespace Ocugine_SDK
         //  @args       none
         //  @return     none
         //============================================================
+        public delegate void OnAPIStatusComplete(APIState data);
+        public delegate void OnAPIStatusError(string code);
+        public async Task<bool> getAPIStatus(OnAPIStatusComplete complete, OnAPIStatusError error){
+            // Set Request data for POST
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("lang", settings.language) // Language
+            });
+
+            // Send Request
+            bool auth = await utils.sendRequest(PROTOCOL + SERVER + API_GATE + STATE_OBJECT + "/", formContent, ((string data) => { // Response
+                APIState state = JsonConvert.DeserializeObject<APIState>(data); // Deserialize Object
+                complete(state); // Return Data
+            }), ((string code) => { // Error
+                error(code);
+            }));
+
+            // All Right
+            return true;
+        }
 
         //============================================================
         //  @class      General
@@ -144,6 +164,7 @@ namespace Ocugine_SDK
             if (settings.modules == SDKModules.Perfomance || settings.modules == SDKModules.All) perfomance = new Perfomance(this); // Create Instance
             if (settings.modules == SDKModules.Backoffice || settings.modules == SDKModules.All) office = new Backoffice(this); // Create Instance
             if (settings.modules == SDKModules.Localization || settings.modules == SDKModules.All) locale = new Localization(this); // Create Instance
+            if (settings.modules == SDKModules.UI || settings.modules == SDKModules.All) ui = new UI(this); // Create Instance
             if (settings.modules == SDKModules.Utils || settings.modules == SDKModules.All) utils = new Utils(this); // Create Instance
         }
     }
@@ -405,6 +426,28 @@ namespace Ocugine_SDK
         public Localization(Ocugine instance, string route = "/auth/"){
             sdk_instance = instance; // Set SDK Instance
         }
+    }
+
+    //===================================================
+    //  Ocugine UI Class
+    //===================================================
+    public class UI{
+        // Private Class Params
+        private Ocugine sdk_instance;            // SDK Instance
+
+        //============================================================
+        //  @class      UI
+        //  @method     UI
+        //  @type       Constructor
+        //  @usage      Initialize UI Module
+        //  @args       none
+        //  @return     none
+        //============================================================
+        public UI(Ocugine instance){
+            sdk_instance = instance; // Set SDK Instance
+        }
+
+        /* TODO: Ocugine UI */
     }
 
     //===================================================

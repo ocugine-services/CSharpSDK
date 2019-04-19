@@ -59,6 +59,9 @@ namespace Ocugine_CSharp_SDK_Demo{
                 language = "EN",
                 modules = SDKModules.All
             });
+
+            // Send Test Request
+
         }
     }
 }
