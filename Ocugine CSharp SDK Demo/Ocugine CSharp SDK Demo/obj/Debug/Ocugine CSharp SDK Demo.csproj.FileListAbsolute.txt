@@ -19,3 +19,24 @@ D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine CSharp SDK Demo\Ocugine CSharp
 D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\bin\Debug\Newtonsoft.Json.dll
 D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\bin\Debug\Newtonsoft.Json.pdb
 D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\bin\Debug\Newtonsoft.Json.xml
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\bin\Debug\Ocugine CSharp SDK Demo.exe.config
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\bin\Debug\Ocugine CSharp SDK Demo.exe
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\bin\Debug\Ocugine CSharp SDK Demo.pdb
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\bin\Debug\Ocugine SDK.dll
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\bin\Debug\Newtonsoft.Json.dll
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\bin\Debug\Ocugine SDK.pdb
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\bin\Debug\Newtonsoft.Json.xml
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\Ocugine CSharp SDK Demo.csprojAssemblyReference.cache
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\MainWindow.g.cs
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\App.g.cs
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\Ocugine CSharp SDK Demo_MarkupCompile.cache
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\Ocugine CSharp SDK Demo_MarkupCompile.lref
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\MainWindow.baml
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\Ocugine CSharp SDK Demo.g.resources
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\Ocugine_CSharp_SDK_Demo.Properties.Resources.resources
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\Ocugine CSharp SDK Demo.csproj.GenerateResource.cache
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\Ocugine CSharp SDK Demo.csproj.CoreCompileInputs.cache
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\Ocugine CSharp SDK Demo.csproj.CopyComplete
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\Ocugine CSharp SDK Demo.exe
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\obj\Debug\Ocugine CSharp SDK Demo.pdb

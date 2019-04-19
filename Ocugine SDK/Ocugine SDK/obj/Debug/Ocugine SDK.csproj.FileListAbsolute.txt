@@ -8,3 +8,13 @@ D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\bin\Debug\Newt
 D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\bin\Debug\Newtonsoft.Json.pdb
 D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\bin\Debug\Newtonsoft.Json.xml
 D:\Store\Visual Studio\Ocugine SDK\C# SDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.csproj.CopyComplete
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\bin\Debug\Ocugine SDK.dll
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\bin\Debug\Ocugine SDK.pdb
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\bin\Debug\Newtonsoft.Json.dll
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\bin\Debug\Newtonsoft.Json.xml
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.csprojAssemblyReference.cache
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.csproj.CoreCompileInputs.cache
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.csproj.CopyComplete
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.dll
+C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.pdb

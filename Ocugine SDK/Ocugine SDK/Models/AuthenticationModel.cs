@@ -68,4 +68,20 @@ namespace Ocugine_SDK.Models{
         public string device = "";          // User Device
         public double time = 0;             // Last Action Time (Unix)
     }
+
+    //===================================================
+    //  Ocugine SDK OAuth Model
+    //===================================================
+    public class OAuthModel : BaseModel
+    {
+        public SubModel data;
+
+        public class SubModel
+        {
+            public double app_id = 0;           // Project ID
+            public string auth_url = "";        // Auth Link
+            public double timeout = 0;          // UNIX Expire time
+        }
+    }
+    
 }

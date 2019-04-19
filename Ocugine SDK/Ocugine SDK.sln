@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ocugine SDK", "Ocugine SDK\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ocugine CSharp SDK Demo", "..\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo\Ocugine CSharp SDK Demo.csproj", "{EE85D370-5012-40F6-BE7B-42F21E8A72C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console Debug", "Console Debug\Console Debug.csproj", "{353B919F-E129-454A-B247-FF6BF25B6289}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EE85D370-5012-40F6-BE7B-42F21E8A72C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE85D370-5012-40F6-BE7B-42F21E8A72C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE85D370-5012-40F6-BE7B-42F21E8A72C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{353B919F-E129-454A-B247-FF6BF25B6289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{353B919F-E129-454A-B247-FF6BF25B6289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{353B919F-E129-454A-B247-FF6BF25B6289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{353B919F-E129-454A-B247-FF6BF25B6289}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

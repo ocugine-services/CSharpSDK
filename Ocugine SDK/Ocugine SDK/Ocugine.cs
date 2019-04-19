@@ -61,6 +61,9 @@ namespace Ocugine_SDK
         // Private Class Params
         private const string STATE_OBJECT = "state";    // State Object
 
+        // Public Class Params
+        public const string STATE_OAUTH = "oauth";     // Oauth Object
+
         //============================================================
         //  @class      General
         //  @method     Ocugine()
@@ -98,6 +101,7 @@ namespace Ocugine_SDK
         public delegate void OnAPIInfoComplete(StateModel data);
         public delegate void OnAPIInfoError(string code);
         public async Task<bool> getAPIInfo(OnAPIInfoComplete complete, OnAPIInfoError error){
+
             // Set Request data for POST
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("lang", settings.language) // Language
@@ -165,7 +169,8 @@ namespace Ocugine_SDK
             if (settings.modules == SDKModules.Backoffice || settings.modules == SDKModules.All) office = new Backoffice(this); // Create Instance
             if (settings.modules == SDKModules.Localization || settings.modules == SDKModules.All) locale = new Localization(this); // Create Instance
             if (settings.modules == SDKModules.UI || settings.modules == SDKModules.All) ui = new UI(this); // Create Instance
-            if (settings.modules == SDKModules.Utils || settings.modules == SDKModules.All) utils = new Utils(this); // Create Instance
+            utils = new Utils(this); // Create Instance 
+            // if (settings.modules == SDKModules.Utils || settings.modules == SDKModules.All) 
         }
     }
 
@@ -434,7 +439,6 @@ namespace Ocugine_SDK
     public class UI{
         // Private Class Params
         private Ocugine sdk_instance;            // SDK Instance
-
         //============================================================
         //  @class      UI
         //  @method     UI
@@ -443,11 +447,53 @@ namespace Ocugine_SDK
         //  @args       none
         //  @return     none
         //============================================================
+        public delegate void OnAPIInfoComplete(OAuthModel data);
+        public delegate void OnAPIInfoError(string code);
+
         public UI(Ocugine instance){
             sdk_instance = instance; // Set SDK Instance
         }
 
-        /* TODO: Ocugine UI */
+        //
+        public async void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error) //
+        {
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                new KeyValuePair<string, string>("lang ", $"{sdk_instance.settings.language}") // Language
+            });           
+
+            bool JSON = await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.STATE_OAUTH + "/get_link", formContent, 
+                ((string data) => { // Response
+                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object
+                    complete(state); // Return Data
+                }), 
+                ((string code) => { // Error
+                    error(code);
+                }));
+        }
+
+        //
+        public async void GetAuthForm(string[] grants, OnAPIInfoComplete complete, OnAPIInfoError error) //
+        {
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Id
+                new KeyValuePair<string, string>("grants", $"{grants}"), // App Id
+                new KeyValuePair<string, string>("lang ", $"{sdk_instance.settings.language}") // Language
+            });
+
+            bool JSON = await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.STATE_OAUTH + "/get_link", formContent,
+                ((string data) => { // Response
+                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object
+                    complete(state); // Return Data
+                }),
+                ((string code) => { // Error
+                    error(code);
+                }));
+        }
+
+        /* TODO: Доделать документацию */
     }
 
     //===================================================
