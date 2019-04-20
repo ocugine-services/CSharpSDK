@@ -83,5 +83,15 @@ namespace Ocugine_SDK.Models{
             public double timeout = 0;          // UNIX Expire time
         }
     }
-    
+    public class OAuthTokenModel : BaseModel
+    {
+        public SubModel data;
+
+        public class SubModel
+        {
+            public string access_token = "";    // Access token
+            public string[] grants = null;          // UNIX Expire time
+        }
+    }
+
 }

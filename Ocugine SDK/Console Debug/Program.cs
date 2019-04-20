@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Ocugine_SDK;
 using Ocugine_SDK.Models;
@@ -24,8 +26,8 @@ namespace Console_Debug
             });
 
             //Console.WriteLine(SDK.getAPIInfo( (StateModel d) => { Console.WriteLine(d); }, (string s) => { Console.WriteLine(s); }));
-            SDK.ui.GetAuthForm ((OAuthModel o) => { Console.WriteLine(o.data.auth_url); }, (string s) => { Console.WriteLine(s); });
-
+            SDK.ui.GetAuthForm ((OAuthTokenModel o) => { Console.WriteLine(o.data.access_token); }, (string s) => { Console.WriteLine(s); });
+            
             Console.Read();
         }
     }

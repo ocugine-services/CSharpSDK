@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Ocugine_SDK.Models;
 using Newtonsoft.Json;
+using System.Windows.Forms;
+using System.Diagnostics;
+using System.Threading;
 
 //===================================================
 //  Ocugine SDK
@@ -62,7 +65,7 @@ namespace Ocugine_SDK
         private const string STATE_OBJECT = "state";    // State Object
 
         // Public Class Params
-        public const string STATE_OAUTH = "oauth";     // Oauth Object
+        public const string OAUTH_OBJECT = "oauth";     // Oauth Object
 
         //============================================================
         //  @class      General
@@ -447,51 +450,102 @@ namespace Ocugine_SDK
         //  @args       none
         //  @return     none
         //============================================================
-        public delegate void OnAPIInfoComplete(OAuthModel data);
+        public delegate void OnAPIInfoComplete(OAuthTokenModel data);
         public delegate void OnAPIInfoError(string code);
 
         public UI(Ocugine instance){
             sdk_instance = instance; // Set SDK Instance
         }
 
-        //
-        public async void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error) //
+        //============================================================
+        //  @class      UI
+        //  @method     GetToken()
+        //  @type       Static Async Void
+        //  @usage      Get Auth data
+        //  @args       (string[]) grants - Grants for project
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================       
+        public void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error) // Get and return login form 
         {
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
                 new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
-                new KeyValuePair<string, string>("lang ", $"{sdk_instance.settings.language}") // Language
-            });           
-
-            bool JSON = await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.STATE_OAUTH + "/get_link", formContent, 
-                ((string data) => { // Response
-                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object
-                    complete(state); // Return Data
-                }), 
-                ((string code) => { // Error
-                    error(code);
-                }));
-        }
-
-        //
-        public async void GetAuthForm(string[] grants, OnAPIInfoComplete complete, OnAPIInfoError error) //
+                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
+            });
+            GetAuthLink(formContent, complete, error);
+        }        
+        public void GetAuthForm(string[] grants, OnAPIInfoComplete complete, OnAPIInfoError error) // Get and return login form with permissions
         {
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
-                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
                 new KeyValuePair<string, string>("grants", $"{grants}"), // App Id
-                new KeyValuePair<string, string>("lang ", $"{sdk_instance.settings.language}") // Language
+                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
             });
+            GetAuthLink(formContent, complete, error);            
+        }
 
-            bool JSON = await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.STATE_OAUTH + "/get_link", formContent,
+        //============================================================
+        //  @class      UI
+        //  @method     GetAuthLink()
+        //  @type       Static Async Void
+        //  @usage      Get or open OAuth form link
+        //  @args       (KeyValuePair) authContent - Auth data
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     (bool) status
+        //============================================================
+        private async void GetAuthLink(FormUrlEncodedContent formContent, OnAPIInfoComplete complete, OnAPIInfoError error)
+        {        
+            bool JSON = await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
                 ((string data) => { // Response
-                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object
-                    complete(state); // Return Data
+                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object  
+                    var browser = Process.Start(state.data.auth_url); // OpenBrowser();
+                    //
+                    var authContent = new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
+                    };
+                    GetToken(authContent, (OAuthTokenModel token) => complete(token), (string err) => error(err)); // Wait for result
                 }),
                 ((string code) => { // Error
                     error(code);
-                }));
+                }));         
         }
+
+        //============================================================
+        //  @class      UI
+        //  @method     GetToken()
+        //  @type       Static Async Void
+        //  @usage      Get user token during the timeout
+        //  @args       (KeyValuePair) authContent - Auth data
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        private async void GetToken(KeyValuePair<string, string>[] authContent, OnAPIInfoComplete complete, OnAPIInfoError error)
+        {
+            int timeout = 0; bool success = false; string lasterror = "";
+            while (success != true && timeout != 30) // et auth waiting time (30 sec)
+            {
+                var formContent = new FormUrlEncodedContent(authContent); // serealize request params
+                bool JSON = await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_token", formContent, 
+                    ((string data) => { // Response
+                        OAuthTokenModel state = JsonConvert.DeserializeObject<OAuthTokenModel>(data); // Deserialize Object
+                    complete(state); // Return Data
+                    return; // End recursion
+                }),
+                ((string code) => { // Error
+                    lasterror = code; // Remember last error
+                }));
+                timeout++; Thread.Sleep(1000); // Increase counter and wait 1 sec
+            }
+            error("Authefication timed out\n" + lasterror); // 
+        }
+
 
         /* TODO: Доделать документацию */
     }
