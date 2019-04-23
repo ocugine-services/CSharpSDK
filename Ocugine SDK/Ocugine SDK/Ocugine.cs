@@ -66,6 +66,7 @@ namespace Ocugine_SDK
 
         // Public Class Params
         public const string OAUTH_OBJECT = "oauth";     // Oauth Object
+        public const string LOCALE_OBJECT = "localization";     // Oauth Object
 
         //============================================================
         //  @class      General
@@ -206,14 +207,14 @@ namespace Ocugine_SDK
         //============================================================
         //  @class      Auth
         //  @method     GetToken()
-        //  @type       Static Async Void
+        //  @type       Static Void
         //  @usage      Get user token
         //              (void) complete - Complete Callback
         //              (void) error - Error Callback
         //  @return     none
         //============================================================
-        public delegate void OnAPIInfoComplete(OAuthTokenModel data);
-        public delegate void OnAPIInfoError(string code);
+        public delegate void OnAPIInfoComplete(OAuthTokenModel data); // Returns OAuthTokenModel
+        public delegate void OnAPIInfoError(string code); // Returns error code
         public async void GetToken(OnAPIInfoComplete complete, OnAPIInfoError error)
         {
             await GetTokenAsync(complete, error);
@@ -228,12 +229,13 @@ namespace Ocugine_SDK
             var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_token", formContent,
                 ((string data) => { // Response
-                        OAuthTokenModel state = JsonConvert.DeserializeObject<OAuthTokenModel>(data); // Deserialize Object
-                        credentials.token = state.data.access_token;
-                        complete(state); // Return Data                       
-                    }),
+                    OAuthTokenModel state = JsonConvert.DeserializeObject<OAuthTokenModel>(data); // Deserialize Object
+                    credentials.token = state.data.access_token;
+                    credentials.is_auth = true;
+                    complete(state); // Return Data                       
+                }),
             ((string code) => { // Error
-                    error(code);
+                error(code);
             }));
         }
 
@@ -241,7 +243,7 @@ namespace Ocugine_SDK
         //============================================================
         //  @class      Logout
         //  @method     GetToken()
-        //  @type       Static Async Void
+        //  @type       Static Void
         //  @usage      Logout by user token
         //              (void) complete - Complete Callback
         //              (void) error - Error Callback
@@ -255,8 +257,9 @@ namespace Ocugine_SDK
         }
         public async Task<bool> LogoutAsync(OnLogoutComplete complete, OnLogoutError error)
         {
-            if(sdk_instance.auth.credentials.token == "")
+            if(sdk_instance.auth.credentials.token == "" || sdk_instance.auth.credentials.is_auth == false)
             {
+                sdk_instance.auth.credentials.token = "";
                 switch (sdk_instance.settings.language)
                 {
                     case "RU": { error("Ошибка деавторизации, приложение не авторизовано"); } break;
@@ -269,7 +272,9 @@ namespace Ocugine_SDK
                     };
             var formContent = new FormUrlEncodedContent(logoutContent); // Serealize request params
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/logout", formContent,
-                ((string data) => { // Response                      
+                ((string data) => { // Response       
+                    sdk_instance.auth.credentials.token = "";
+                    sdk_instance.auth.credentials.is_auth = false;
                     complete(data);
                 }),
             ((string code) => { // Error
@@ -493,6 +498,7 @@ namespace Ocugine_SDK
     //  Ocugine Localization Class
     //===================================================
     public class Localization{
+        
 
         // Private Class Params
         private Ocugine sdk_instance;            // SDK Instance
@@ -507,6 +513,39 @@ namespace Ocugine_SDK
         //============================================================
         public Localization(Ocugine instance, string route = "/auth/"){
             sdk_instance = instance; // Set SDK Instance
+        }
+
+        //============================================================
+        //  @class      Localization
+        //  @method     GetLang()
+        //  @type       Static Async Void
+        //  @usage      Get locale info
+        //  @args       (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //              (string) lang_code - Lang code
+        //  @return     none
+        //============================================================   
+        public delegate void OnGetLangComplete(LanguageInfo data);
+        public delegate void OnGetLangError(string code);
+        public void GetLang(OnGetLangComplete complete, OnGetLangError error, string lang_code) // Get and return login form with all permissions
+        {
+            GetLangAsync(complete, error, lang_code);
+        }
+        public async void GetLangAsync(OnGetLangComplete complete, OnGetLangError error, string lang_code) // Get and return login form with all permissions
+        {
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                new KeyValuePair<string, string>("code", $"{lang_code}"), // Code language
+            });
+            await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_lang", formContent,
+                ((string data) => { // Response
+                    LanguageInfo state = JsonConvert.DeserializeObject<LanguageInfo>(data); // Deserialize Object    
+                    complete(state);
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
         }
     }
 
@@ -542,13 +581,13 @@ namespace Ocugine_SDK
         //============================================================   
         public delegate void OnAPIInfoComplete(OAuthTokenModel data);
         public delegate void OnAPIInfoError(string code);
-        public void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error, string grants = "all") // Get and return login form with all permissions
-        {
+        public void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error, string grants = "") // Get and return login form with all permissions
+        {          
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
                 new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                new KeyValuePair<string, string>("grants", $"{grants}"), // App key
                 new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}"), // Language
-                new KeyValuePair<string, string>("grants", $"{grants}"), // App Id
             });
             GetAuthLink(formContent, complete, error);
         }        
@@ -578,10 +617,11 @@ namespace Ocugine_SDK
             bool JSON = await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
                 (async (string data) => { // Response
                     OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object  
-                    var browser = Process.Start(state.data.auth_url); // OpenBrowser();
+                    /** Browser open **/
+                    var browser = Process.Start(state.data.auth_url); // OpenBrowser();                  
                     //                                   
-                    int timeout = 0; bool GotToken = false; string lasterror = "";
-                    while (!GotToken && timeout != 30) // Set auth waiting time (30 sec)
+                    int timeout = 0;  bool GotToken = false; string lasterror = "";
+                    while (!GotToken && timeout != sdk_instance.settings.auth_timeout) // Set auth waiting time (30 sec)
                     {
                         GotToken = await sdk_instance.auth.GetTokenAsync((OAuthTokenModel token) => complete(token), (string err) => lasterror = err); // Wait for result
                         timeout++; Thread.Sleep(1000); // Increase counter and wait 1 sec

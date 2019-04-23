@@ -23,16 +23,29 @@ namespace Console_Debug
             }, new SDKSettings
             {
                 language = "RU",
-                modules = SDKModules.All
+                modules = SDKModules.All,
+                auth_timeout = 10
             });
 
-            // Тест вызова формы аутентификации
-            //SDK.ui.GetAuthForm ((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
-            // Тест получения токена           
-            SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
-            // Тест логаута           
+            /** Тест вызова формы аутентификации **/
+            SDK.ui.GetAuthForm((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); }, "all");
+
+            /** Тест получения токена **/
+            //SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
+
+            /** Тест логаута **/
             //Thread.Sleep(1000);
             //SDK.auth.Logout((string o) => { Console.WriteLine("Успешный логаут"); }, (string s) => { Console.WriteLine(s); });
+
+            /** Тест получения информации о языке **/
+            SDK.locale.GetLang((LanguageInfo o) => { Console.WriteLine($"{o.data.name}"); }, (string s) => { Console.WriteLine(s); }, "ru");
+
+            /** Тест  **/
+            /** Тест  **/
+            /** Тест  **/
+            /** Тест  **/
+            /** Тест  **/
+            /** Тест  **/
 
             Console.Read();
         }

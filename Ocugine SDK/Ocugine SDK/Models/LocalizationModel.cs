@@ -21,25 +21,27 @@ using System.Threading.Tasks;
 //===================================================
 //  Namespace Ocugine SDK
 //===================================================
-namespace Ocugine_SDK.Models{
-    //===================================================
-    //  Ocugine SDK Settings
-    //===================================================
-    public class SDKSettings{
-        // General Settings
-        public string language = "";           // SDK Language
-        public SDKModules modules;             // SDK Modules
-        public int auth_timeout;               // Auth timeout
+namespace Ocugine_SDK.Models
+{
+    public class LocalizationModel
+    {
+        
     }
 
     //===================================================
-    //  Ocugine Application Settings
+    //  Ocugine Language Info Model
     //===================================================
-    public class AppSettings{
-        public double app_id = 0;           // Application ID
-        public string app_key = "";         // Application Key
-        public string app_name = "";        // Application Name
-        public string app_desc = "";        // Application Desc
-        public string app_version = "";     // Application Version
+    public class LanguageInfo : BaseModel
+    {
+        public SubModel data;
+
+        public class SubModel
+        {
+            public string uid = "";            // Locale id
+            public string code = "";           // Locale short name
+            public string name = "";           // Locale name
+            public string time = "";           // Locale last edit time
+            public string project_id = "";     // Project id
+        }
     }
 }

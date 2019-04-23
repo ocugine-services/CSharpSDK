@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\LocalizationModel.cs" />
     <Compile Include="Models\SDKModules.cs" />
     <Compile Include="Models\SDKSettings.cs" />
     <Compile Include="Models\StateModel.cs" />
