@@ -18,5 +18,3 @@ C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\o
 C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.csproj.CopyComplete
 C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.dll
 C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.pdb
-C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine_SDK.WebBrowser.resources
-C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\obj\Debug\Ocugine SDK.csproj.GenerateResource.cache

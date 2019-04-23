@@ -27,7 +27,7 @@ namespace Ocugine_SDK.Models{
     //===================================================
     public class SDKSettings{
         // General Settings
-        public string language = "";        // SDK Language
+        public string language = "";           // SDK Language
         public SDKModules modules;             // SDK Modules
     }
 

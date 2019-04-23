@@ -91,7 +91,7 @@ namespace Ocugine_SDK
             // Initialize Modules
             _initializeModules(); // Yep
         }
-
+        
         //============================================================
         //  @class      General
         //  @method     getAPIInfo()
@@ -184,7 +184,7 @@ namespace Ocugine_SDK
         // General Class Params
 
         // Authentication Objects
-        public AuthenticationModel credentials;  // Authentication Credentials
+        public AuthenticationModel credentials = new AuthenticationModel();  // Authentication Credentials
         public ProfileModel profile;             // Authenticated User Profile
         public ViewerModel viewer;               // Authenticated User Viewer Model
 
@@ -201,6 +201,80 @@ namespace Ocugine_SDK
         //============================================================
         public Auth(Ocugine instance, string route = "/auth/"){
             sdk_instance = instance; // Set SDK Instance
+        }
+
+        //============================================================
+        //  @class      Auth
+        //  @method     GetToken()
+        //  @type       Static Async Void
+        //  @usage      Get user token
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public delegate void OnAPIInfoComplete(OAuthTokenModel data);
+        public delegate void OnAPIInfoError(string code);
+        public async void GetToken(OnAPIInfoComplete complete, OnAPIInfoError error)
+        {
+            await GetTokenAsync(complete, error);
+        }
+        public async Task<bool> GetTokenAsync(OnAPIInfoComplete complete, OnAPIInfoError error)
+        {
+            var authContent = new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
+                    };
+            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_token", formContent,
+                ((string data) => { // Response
+                        OAuthTokenModel state = JsonConvert.DeserializeObject<OAuthTokenModel>(data); // Deserialize Object
+                        credentials.token = state.data.access_token;
+                        complete(state); // Return Data                       
+                    }),
+            ((string code) => { // Error
+                    error(code);
+            }));
+        }
+
+
+        //============================================================
+        //  @class      Logout
+        //  @method     GetToken()
+        //  @type       Static Async Void
+        //  @usage      Logout by user token
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public delegate void OnLogoutComplete(string data);
+        public delegate void OnLogoutError(string code);
+        public async void Logout(OnLogoutComplete complete, OnLogoutError error)
+        {
+            await LogoutAsync(complete, error);
+        }
+        public async Task<bool> LogoutAsync(OnLogoutComplete complete, OnLogoutError error)
+        {
+            if(sdk_instance.auth.credentials.token == "")
+            {
+                switch (sdk_instance.settings.language)
+                {
+                    case "RU": { error("Ошибка деавторизации, приложение не авторизовано"); } break;
+                    default: { error("Logout error, application not authorized"); } break;
+                }
+                return false;
+            }              
+            var logoutContent = new[]{
+                        new KeyValuePair<string, string>("access_token", $"{sdk_instance.auth.credentials.token}"),   // App Token
+                    };
+            var formContent = new FormUrlEncodedContent(logoutContent); // Serealize request params
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/logout", formContent,
+                ((string data) => { // Response                      
+                    complete(data);
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
         }
 
     }
@@ -442,6 +516,8 @@ namespace Ocugine_SDK
     public class UI{
         // Private Class Params
         private Ocugine sdk_instance;            // SDK Instance
+
+
         //============================================================
         //  @class      UI
         //  @method     UI
@@ -450,9 +526,6 @@ namespace Ocugine_SDK
         //  @args       none
         //  @return     none
         //============================================================
-        public delegate void OnAPIInfoComplete(OAuthTokenModel data);
-        public delegate void OnAPIInfoError(string code);
-
         public UI(Ocugine instance){
             sdk_instance = instance; // Set SDK Instance
         }
@@ -466,22 +539,25 @@ namespace Ocugine_SDK
         //              (void) complete - Complete Callback
         //              (void) error - Error Callback
         //  @return     none
-        //============================================================       
-        public void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error) // Get and return login form 
+        //============================================================   
+        public delegate void OnAPIInfoComplete(OAuthTokenModel data);
+        public delegate void OnAPIInfoError(string code);
+        public void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error, string grants = "all") // Get and return login form with all permissions
         {
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
                 new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
-                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
+                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}"), // Language
+                new KeyValuePair<string, string>("grants", $"{grants}"), // App Id
             });
             GetAuthLink(formContent, complete, error);
         }        
-        public void GetAuthForm(string[] grants, OnAPIInfoComplete complete, OnAPIInfoError error) // Get and return login form with permissions
+        public void GetAuthForm(string[] grants, OnAPIInfoComplete complete, OnAPIInfoError error) // Get and return login form with selected permissions
         {
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
                 new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
-                new KeyValuePair<string, string>("grants", $"{grants}"), // App Id
+                new KeyValuePair<string, string>("grants", $"{grants}"), // Permissions
                 new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
             });
             GetAuthLink(formContent, complete, error);            
@@ -500,53 +576,29 @@ namespace Ocugine_SDK
         private async void GetAuthLink(FormUrlEncodedContent formContent, OnAPIInfoComplete complete, OnAPIInfoError error)
         {        
             bool JSON = await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
-                ((string data) => { // Response
+                (async (string data) => { // Response
                     OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object  
                     var browser = Process.Start(state.data.auth_url); // OpenBrowser();
-                    //
-                    var authContent = new[]{
-                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
-                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
-                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
-                    };
-                    GetToken(authContent, (OAuthTokenModel token) => complete(token), (string err) => error(err)); // Wait for result
+                    //                                   
+                    int timeout = 0; bool GotToken = false; string lasterror = "";
+                    while (!GotToken && timeout != 30) // Set auth waiting time (30 sec)
+                    {
+                        GotToken = await sdk_instance.auth.GetTokenAsync((OAuthTokenModel token) => complete(token), (string err) => lasterror = err); // Wait for result
+                        timeout++; Thread.Sleep(1000); // Increase counter and wait 1 sec
+                    }
+                    if (!GotToken)
+                    {
+                        switch (sdk_instance.settings.language)
+                        {
+                            case "RU": { error("Время на аутентификацию вышло\n" + lasterror); } break;
+                            default: { error("Authefication timed out\n" + lasterror); } break;
+                        }
+                    }
                 }),
                 ((string code) => { // Error
                     error(code);
                 }));         
         }
-
-        //============================================================
-        //  @class      UI
-        //  @method     GetToken()
-        //  @type       Static Async Void
-        //  @usage      Get user token during the timeout
-        //  @args       (KeyValuePair) authContent - Auth data
-        //              (void) complete - Complete Callback
-        //              (void) error - Error Callback
-        //  @return     none
-        //============================================================
-        private async void GetToken(KeyValuePair<string, string>[] authContent, OnAPIInfoComplete complete, OnAPIInfoError error)
-        {
-            int timeout = 0; bool success = false; string lasterror = "";
-            while (success != true && timeout != 30) // et auth waiting time (30 sec)
-            {
-                var formContent = new FormUrlEncodedContent(authContent); // serealize request params
-                bool JSON = await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_token", formContent, 
-                    ((string data) => { // Response
-                        OAuthTokenModel state = JsonConvert.DeserializeObject<OAuthTokenModel>(data); // Deserialize Object
-                    complete(state); // Return Data
-                    return; // End recursion
-                }),
-                ((string code) => { // Error
-                    lasterror = code; // Remember last error
-                }));
-                timeout++; Thread.Sleep(1000); // Increase counter and wait 1 sec
-            }
-            error("Authefication timed out\n" + lasterror); // 
-        }
-
-
         /* TODO: Доделать документацию */
     }
 

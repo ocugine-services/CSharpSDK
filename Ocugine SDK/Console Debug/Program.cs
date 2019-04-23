@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,14 +22,21 @@ namespace Console_Debug
                 app_key = "c46361ae80c1679d637c2f23968a4dc5d5ea2a65"
             }, new SDKSettings
             {
-                language = "EN",
+                language = "RU",
                 modules = SDKModules.All
             });
 
-            //Console.WriteLine(SDK.getAPIInfo( (StateModel d) => { Console.WriteLine(d); }, (string s) => { Console.WriteLine(s); }));
-            SDK.ui.GetAuthForm ((OAuthTokenModel o) => { Console.WriteLine(o.data.access_token); }, (string s) => { Console.WriteLine(s); });
-            
+            // Тест вызова формы аутентификации
+            //SDK.ui.GetAuthForm ((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
+            // Тест получения токена           
+            SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
+            // Тест логаута           
+            //Thread.Sleep(1000);
+            //SDK.auth.Logout((string o) => { Console.WriteLine("Успешный логаут"); }, (string s) => { Console.WriteLine(s); });
+
             Console.Read();
         }
+        
+
     }
 }
