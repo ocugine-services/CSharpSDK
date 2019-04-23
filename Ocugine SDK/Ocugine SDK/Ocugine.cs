@@ -499,7 +499,6 @@ namespace Ocugine_SDK
     //===================================================
     public class Localization{
         
-
         // Private Class Params
         private Ocugine sdk_instance;            // SDK Instance
 
@@ -519,7 +518,7 @@ namespace Ocugine_SDK
         //  @class      Localization
         //  @method     GetLang()
         //  @type       Static Async Void
-        //  @usage      Get locale info
+        //  @usage      Get language info
         //  @args       (void) complete - Complete Callback
         //              (void) error - Error Callback
         //              (string) lang_code - Lang code
@@ -527,11 +526,11 @@ namespace Ocugine_SDK
         //============================================================   
         public delegate void OnGetLangComplete(LanguageInfo data);
         public delegate void OnGetLangError(string code);
-        public void GetLang(OnGetLangComplete complete, OnGetLangError error, string lang_code) // Get and return login form with all permissions
+        public void GetLang(OnGetLangComplete complete, OnGetLangError error, string lang_code) // Get lang
         {
             GetLangAsync(complete, error, lang_code);
         }
-        public async void GetLangAsync(OnGetLangComplete complete, OnGetLangError error, string lang_code) // Get and return login form with all permissions
+        public async void GetLangAsync(OnGetLangComplete complete, OnGetLangError error, string lang_code) //  (bool) Get lang
         {
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
@@ -541,6 +540,41 @@ namespace Ocugine_SDK
             await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_lang", formContent,
                 ((string data) => { // Response
                     LanguageInfo state = JsonConvert.DeserializeObject<LanguageInfo>(data); // Deserialize Object    
+                    complete(state);
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
+        }
+
+        //============================================================
+        //  @class      Localization
+        //  @method     GetLang()
+        //  @type       Static Async Void
+        //  @usage      Get locale info
+        //  @args       (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //              (string) lang_code - Lang code
+        //              (string) locale_code - Locale code
+        //  @return     none
+        //============================================================   
+        public delegate void OnGetLocaleComplete(LocaleInfo data);
+        public delegate void OnGetLocaleError(string code);
+        public void GetLocale(OnGetLocaleComplete complete, OnGetLocaleError error, string lang_code, string locale_code) // Get locale
+        {
+            GetLocaleAsync(complete, error, lang_code, locale_code);
+        }
+        public async void GetLocaleAsync(OnGetLocaleComplete complete, OnGetLocaleError error, string lang_code, string locale_code) // (bool) Get locale
+        {
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                new KeyValuePair<string, string>("lang", $"{lang_code}"), // Code language
+                new KeyValuePair<string, string>("code", $"{locale_code}"), // Code locale
+            });
+            await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_locale", formContent,
+                ((string data) => { // Response
+                    LocaleInfo state = JsonConvert.DeserializeObject<LocaleInfo>(data); // Deserialize Object    
                     complete(state);
                 }),
             ((string code) => { // Error

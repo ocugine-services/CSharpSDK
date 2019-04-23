@@ -37,10 +37,27 @@ namespace Ocugine_SDK.Models
 
         public class SubModel
         {
+            public string uid = "";            // Locale language id
+            public string code = "";           // Locale language short name
+            public string name = "";           // Locale language name
+            public string time = "";           // Locale language last edit time
+            public string project_id = "";     // Project id
+        }
+    }
+
+    //===================================================
+    //  Ocugine Locale Info Model
+    //===================================================
+    public class LocaleInfo : BaseModel
+    {
+        public SubModel data;
+
+        public class SubModel
+        {
             public string uid = "";            // Locale id
             public string code = "";           // Locale short name
-            public string name = "";           // Locale name
-            public string time = "";           // Locale last edit time
+            public string language = "";       // Locale language
+            public string value = "";          // Locale value
             public string project_id = "";     // Project id
         }
     }

@@ -28,7 +28,7 @@ namespace Console_Debug
             });
 
             /** Тест вызова формы аутентификации **/
-            SDK.ui.GetAuthForm((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); }, "all");
+            //SDK.ui.GetAuthForm((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); }, "all");
 
             /** Тест получения токена **/
             //SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
@@ -40,7 +40,9 @@ namespace Console_Debug
             /** Тест получения информации о языке **/
             SDK.locale.GetLang((LanguageInfo o) => { Console.WriteLine($"{o.data.name}"); }, (string s) => { Console.WriteLine(s); }, "ru");
 
-            /** Тест  **/
+            /** Тест получения информации о языке **/
+            SDK.locale.GetLocale((LocaleInfo o) => { Console.WriteLine($"{o.data.value}"); }, (string s) => { Console.WriteLine(s); }, "ru", "test-node");
+
             /** Тест  **/
             /** Тест  **/
             /** Тест  **/
