@@ -34,28 +34,29 @@ namespace Console_Debug
             //SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест логаута **/
-            //Thread.Sleep(1000);
+            //Thread.Sleep(2000);
             //SDK.auth.Logout((string o) => { Console.WriteLine("Успешный логаут"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест получения информации о языке **/
-            SDK.locale.GetLang((LanguageInfo o) => { Console.WriteLine($"{o.data.name}"); }, (string s) => { Console.WriteLine(s); }, "ru");
+            //SDK.locale.GetLang("ru", (LanguageInfo o) => { Console.WriteLine($"{o.data.name}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест получения информации о языке **/
-            SDK.locale.GetLocale((LocaleInfo o) => { Console.WriteLine($"{o.data.value}"); }, (string s) => { Console.WriteLine(s); }, "ru", "test-node");
+            //SDK.locale.GetLocale("ru", "test-node", (LocaleInfo o) => { Console.WriteLine($"{o.data.value}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест  **/
 
 
             /** Тест  **/
-            
-            
+
+
             /** Тест  **/
-            
-            
+
+
             /** Тест  **/
-            
-            
+
+
             /** Тест  **/
+
 
             Console.Read();
         }

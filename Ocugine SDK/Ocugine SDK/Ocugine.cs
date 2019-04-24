@@ -526,11 +526,11 @@ namespace Ocugine_SDK
         //============================================================   
         public delegate void OnGetLangComplete(LanguageInfo data);
         public delegate void OnGetLangError(string code);
-        public void GetLang(OnGetLangComplete complete, OnGetLangError error, string lang_code) // Get lang
+        public void GetLang(string lang_code, OnGetLangComplete complete, OnGetLangError error) // Get lang
         {
-            GetLangAsync(complete, error, lang_code);
+            GetLangAsync(lang_code, complete, error);
         }
-        public async void GetLangAsync(OnGetLangComplete complete, OnGetLangError error, string lang_code) //  (bool) Get lang
+        public async void GetLangAsync(string lang_code, OnGetLangComplete complete, OnGetLangError error) //  (bool) Get lang
         {
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
@@ -560,11 +560,11 @@ namespace Ocugine_SDK
         //============================================================   
         public delegate void OnGetLocaleComplete(LocaleInfo data);
         public delegate void OnGetLocaleError(string code);
-        public void GetLocale(OnGetLocaleComplete complete, OnGetLocaleError error, string lang_code, string locale_code) // Get locale
+        public void GetLocale(string lang_code, string locale_code, OnGetLocaleComplete complete, OnGetLocaleError error) // Get locale
         {
-            GetLocaleAsync(complete, error, lang_code, locale_code);
+            GetLocaleAsync(lang_code, locale_code, complete, error);
         }
-        public async void GetLocaleAsync(OnGetLocaleComplete complete, OnGetLocaleError error, string lang_code, string locale_code) // (bool) Get locale
+        public async void GetLocaleAsync(string lang_code, string locale_code, OnGetLocaleComplete complete, OnGetLocaleError error) // (bool) Get locale
         {
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
@@ -589,7 +589,6 @@ namespace Ocugine_SDK
     public class UI{
         // Private Class Params
         private Ocugine sdk_instance;            // SDK Instance
-
 
         //============================================================
         //  @class      UI
