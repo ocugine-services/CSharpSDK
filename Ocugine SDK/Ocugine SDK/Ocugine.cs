@@ -186,8 +186,8 @@ namespace Ocugine_SDK
 
         // Authentication Objects
         public AuthenticationModel credentials = new AuthenticationModel();  // Authentication Credentials
-        public ProfileModel profile;             // Authenticated User Profile
-        public ViewerModel viewer;               // Authenticated User Viewer Model
+        public ProfileModel profile = new ProfileModel();             // Authenticated User Profile
+        public ViewerModel viewer = new ViewerModel();               // Authenticated User Viewer Model
 
         // Private Class Params
         private Ocugine sdk_instance;            // SDK Instance
@@ -625,7 +625,7 @@ namespace Ocugine_SDK
             });
             GetAuthLink(formContent, complete, error);
         }        
-        public void GetAuthForm(string[] grants, OnAPIInfoComplete complete, OnAPIInfoError error) // Get and return login form with selected permissions
+        public void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error, string[] grants) // Get and return login form with selected permissions
         {
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
