@@ -241,8 +241,8 @@ namespace Ocugine_SDK
 
 
         //============================================================
-        //  @class      Logout
-        //  @method     GetToken()
+        //  @class      Auth
+        //  @method     Logout()
         //  @type       Static Void
         //  @usage      Logout by user token
         //              (void) complete - Complete Callback
@@ -282,6 +282,63 @@ namespace Ocugine_SDK
             }));
         }
 
+        //============================================================
+        //  @class      Auth
+        //  @method     GetLink()
+        //  @type       Static Async Void
+        //  @usage      Get oauth link
+        //  @args       (string[] / string) grants - Grants for project
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     (bool) status
+        //============================================================
+        public delegate void OnGetLinkComplete(string data);
+        public delegate void OnGetLinkError(string code);
+        // With an array
+        public async void GetLink(OnGetLinkComplete complete, OnGetLinkError error, string[] grants)
+        {
+            await GetLinkAsync(complete, error, grants);
+        }
+        public async Task<bool> GetLinkAsync(OnGetLinkComplete complete, OnGetLinkError error, string[] grants)
+        {
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
+                new KeyValuePair<string, string>("grants", $"{grants}"), // Permissions
+                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
+            });
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
+                ((string data) => { // Response
+                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object  
+                    complete(state.data.auth_url);
+                }),
+                ((string code) => { // Error
+                    error(code);
+                }));
+        }
+        // With a string
+        public async void GetLink(OnGetLinkComplete complete, OnGetLinkError error, string grants = "")
+        {
+            await GetLinkAsync(complete, error, grants);
+        }
+        public async Task<bool> GetLinkAsync(OnGetLinkComplete complete, OnGetLinkError error, string grants = "")
+        {
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
+                new KeyValuePair<string, string>("grants", $"{grants}"), // Permissions
+                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
+            });
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
+                ((string data) => { // Response
+                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object  
+                    complete(state.data.auth_url);
+                }),
+                ((string code) => { // Error
+                    error(code);
+                }));
+        }
+        
     }
 
     //===================================================
@@ -606,72 +663,57 @@ namespace Ocugine_SDK
         //  @class      UI
         //  @method     GetToken()
         //  @type       Static Async Void
-        //  @usage      Get Auth data
-        //  @args       (string[]) grants - Grants for project
+        //  @usage      Get token by Oauth protocol
+        //  @args       (string / string[]) grants - Grants for project
         //              (void) complete - Complete Callback
         //              (void) error - Error Callback
         //  @return     none
         //============================================================   
         public delegate void OnAPIInfoComplete(OAuthTokenModel data);
         public delegate void OnAPIInfoError(string code);
-        public void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error, string grants = "") // Get and return login form with all permissions
-        {          
-            var formContent = new FormUrlEncodedContent(new[]{
-                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
-                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
-                new KeyValuePair<string, string>("grants", $"{grants}"), // App key
-                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}"), // Language
-            });
-            GetAuthLink(formContent, complete, error);
-        }        
-        public void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error, string[] grants) // Get and return login form with selected permissions
+        public async void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error, string grants = "") // Get and return login form with all permissions
         {
-            var formContent = new FormUrlEncodedContent(new[]{
-                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
-                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
-                new KeyValuePair<string, string>("grants", $"{grants}"), // Permissions
-                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
-            });
-            GetAuthLink(formContent, complete, error);            
+            /** Browser open **/
+            bool JSON = await sdk_instance.auth.GetLinkAsync((string c) => Process.Start(c), (string e) => error(e), grants); // OpenBrowser();      
+            if (!JSON) return;
+            //
+            int timeout = 0; bool GotToken = false; string lasterror = "";
+            while (!GotToken && timeout != sdk_instance.settings.auth_timeout) // Set auth waiting time (30 sec)
+            {
+                GotToken = await sdk_instance.auth.GetTokenAsync((OAuthTokenModel token) => complete(token), (string err) => lasterror = err); // Wait for result
+                timeout++; Thread.Sleep(1000); // Increase counter and wait 1 sec
+            }
+            if (!GotToken)
+            {
+                switch (sdk_instance.settings.language)
+                {
+                    case "RU": { error("Время на аутентификацию вышло\n" + lasterror); } break;
+                    default: { error("Authefication timed out\n" + lasterror); } break;
+                }
+            }
+        }        
+        public async void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error, string[] grants) // Get and return login form with selected permissions
+        {
+            /** Browser open **/
+            bool JSON = await sdk_instance.auth.GetLinkAsync((string c) => Process.Start(c), (string e) => error(e), grants); // OpenBrowser();   
+            if (!JSON) return;
+            //
+            int timeout = 0; bool GotToken = false; string lasterror = "";
+            while (!GotToken && timeout != sdk_instance.settings.auth_timeout) // Set auth waiting time (30 sec)
+            {
+                GotToken = await sdk_instance.auth.GetTokenAsync((OAuthTokenModel token) => complete(token), (string err) => lasterror = err); // Wait for result
+                timeout++; Thread.Sleep(1000); // Increase counter and wait 1 sec
+            }
+            if (!GotToken)
+            {
+                switch (sdk_instance.settings.language)
+                {
+                    case "RU": { error("Время на аутентификацию вышло\n" + lasterror); } break;
+                    default: { error("Authefication timed out\n" + lasterror); } break;
+                }
+            }
         }
-
-        //============================================================
-        //  @class      UI
-        //  @method     GetAuthLink()
-        //  @type       Static Async Void
-        //  @usage      Get or open OAuth form link
-        //  @args       (KeyValuePair) authContent - Auth data
-        //              (void) complete - Complete Callback
-        //              (void) error - Error Callback
-        //  @return     (bool) status
-        //============================================================
-        private async void GetAuthLink(FormUrlEncodedContent formContent, OnAPIInfoComplete complete, OnAPIInfoError error)
-        {        
-            bool JSON = await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
-                (async (string data) => { // Response
-                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object  
-                    /** Browser open **/
-                    var browser = Process.Start(state.data.auth_url); // OpenBrowser();                  
-                    //                                   
-                    int timeout = 0;  bool GotToken = false; string lasterror = "";
-                    while (!GotToken && timeout != sdk_instance.settings.auth_timeout) // Set auth waiting time (30 sec)
-                    {
-                        GotToken = await sdk_instance.auth.GetTokenAsync((OAuthTokenModel token) => complete(token), (string err) => lasterror = err); // Wait for result
-                        timeout++; Thread.Sleep(1000); // Increase counter and wait 1 sec
-                    }
-                    if (!GotToken)
-                    {
-                        switch (sdk_instance.settings.language)
-                        {
-                            case "RU": { error("Время на аутентификацию вышло\n" + lasterror); } break;
-                            default: { error("Authefication timed out\n" + lasterror); } break;
-                        }
-                    }
-                }),
-                ((string code) => { // Error
-                    error(code);
-                }));         
-        }
+        
         /* TODO: Доделать документацию */
     }
 
