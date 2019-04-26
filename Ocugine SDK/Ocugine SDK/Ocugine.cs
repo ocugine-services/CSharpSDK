@@ -160,19 +160,19 @@ namespace Ocugine_SDK
         //  @return     none
         //============================================================
         private void _initializeModules(){
-            if (settings.modules == SDKModules.Auth || settings.modules == SDKModules.All) auth = new Auth(this); // Create Instance
-            if (settings.modules == SDKModules.Analytics || settings.modules == SDKModules.All) analytics = new Analytics(this); // Create Instance
-            if (settings.modules == SDKModules.GameServices || settings.modules == SDKModules.All) game = new GameServices(this); // Create Instance
-            if (settings.modules == SDKModules.Payments || settings.modules == SDKModules.All) monetization = new Payments(this); // Create Instance
-            if (settings.modules == SDKModules.Notifications || settings.modules == SDKModules.All) notifications = new Notifications(this); // Create Instance
-            if (settings.modules == SDKModules.Marketing || settings.modules == SDKModules.All) marketing = new Marketing(this); // Create Instance
-            if (settings.modules == SDKModules.Ads || settings.modules == SDKModules.All) ads = new Ads(this); // Create Instance
-            if (settings.modules == SDKModules.Backend || settings.modules == SDKModules.All) backend = new Backend(this); // Create Instance
-            if (settings.modules == SDKModules.Reporting || settings.modules == SDKModules.All) reports = new Reporting(this); // Create Instance
-            if (settings.modules == SDKModules.Perfomance || settings.modules == SDKModules.All) perfomance = new Perfomance(this); // Create Instance
-            if (settings.modules == SDKModules.Backoffice || settings.modules == SDKModules.All) office = new Backoffice(this); // Create Instance
-            if (settings.modules == SDKModules.Localization || settings.modules == SDKModules.All) locale = new Localization(this); // Create Instance
-            if (settings.modules == SDKModules.UI || settings.modules == SDKModules.All) ui = new UI(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Auth) || settings.modules.Contains(SDKModules.All)) auth = new Auth(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Analytics) || settings.modules.Contains(SDKModules.All)) analytics = new Analytics(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.GameServices) || settings.modules.Contains(SDKModules.All)) game = new GameServices(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Payments) || settings.modules.Contains(SDKModules.All)) monetization = new Payments(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Notifications) || settings.modules.Contains(SDKModules.All)) notifications = new Notifications(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Marketing) || settings.modules.Contains(SDKModules.All)) marketing = new Marketing(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Ads) || settings.modules.Contains(SDKModules.All)) ads = new Ads(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Backend) || settings.modules.Contains(SDKModules.All)) backend = new Backend(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Reporting) || settings.modules.Contains(SDKModules.All)) reports = new Reporting(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Perfomance) || settings.modules.Contains(SDKModules.All)) perfomance = new Perfomance(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Backoffice) || settings.modules.Contains(SDKModules.All)) office = new Backoffice(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Localization) || settings.modules.Contains(SDKModules.All)) locale = new Localization(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.UI) || settings.modules.Contains(SDKModules.All)) ui = new UI(this); // Create Instance
             utils = new Utils(this); // Create Instance 
             // if (settings.modules == SDKModules.Utils || settings.modules == SDKModules.All) 
         }

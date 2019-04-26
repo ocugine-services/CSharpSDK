@@ -23,7 +23,7 @@ namespace Console_Debug
             }, new SDKSettings
             {
                 language = "RU",
-                modules = SDKModules.All,
+                modules = new SDKModules[] { SDKModules.All },
                 auth_timeout = 10
             });
 
