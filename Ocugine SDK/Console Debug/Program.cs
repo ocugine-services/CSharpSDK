@@ -28,7 +28,7 @@ namespace Console_Debug
             });
 
             /** Тест вызова формы аутентификации **/
-            SDK.ui.GetAuthForm((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); }, new string[]{ "profile" });
+            SDK.ui.GetAuthForm((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); }, new string[]{ "all" });
 
             /** Тест получения ссылки на авторизацию **/
             //SDK.auth.GetLink((string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); }, "somebody,once,told,me");

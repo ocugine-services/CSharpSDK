@@ -682,8 +682,8 @@ namespace Ocugine_SDK
             {
                 switch (sdk_instance.settings.language)
                 {
-                    case "RU": { error("Для использования данного метода необходимо подключить модуль Auth"); } break;
-                    default: { error("This method requires Auth module"); } break;
+                    case "RU": { error("Для использования метода GetAuthForm необходимо подключить модуль Auth"); } break;
+                    default: { error("Method GetAuthForm requires Auth module"); } break;
                 }
                 return;
                 //sdk_instance.auth = new Auth(sdk_instance);
@@ -712,10 +712,28 @@ namespace Ocugine_SDK
         }        
         public async void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error, string[] grants) // Get and return login form with selected permissions
         {
-            /** Browser open **/
-            bool JSON = await sdk_instance.auth.GetLinkAsync((string c) => Process.Start(c), (string e) => error(e), grants); // OpenBrowser();   
-            if (!JSON) return;
-            //
+            /** checking Auth module **/
+            try
+            {
+                var test = sdk_instance.auth.credentials.is_auth;
+            }
+            catch (Exception)
+            {
+                switch (sdk_instance.settings.language)
+                {
+                    case "RU": { error("Для использования метода GetAuthForm необходимо подключить модуль Auth"); } break;
+                    default: { error("Method GetAuthForm requires Auth module"); } break;
+                }
+                return;
+                //sdk_instance.auth = new Auth(sdk_instance);
+            }
+            /** Get link and open brower **/
+            bool GotLink = await sdk_instance.auth.GetLinkAsync((string c) => Process.Start(c), (string e) => error(e), grants); // OpenBrowser();   
+            if (!GotLink) // Error
+            {
+                return;
+            }
+            /** Iteration for auth checking **/
             int timeout = 0; bool GotToken = false; string lasterror = "";
             while (!GotToken && timeout != sdk_instance.settings.auth_timeout) // Set auth waiting time (30 sec)
             {
