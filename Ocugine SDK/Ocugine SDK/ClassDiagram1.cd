@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Ocugine_SDK.Models.AuthenticationModel" Collapsed="true">
+    <Position X="11.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAGAAAIAEAEAEAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Models\AuthenticationModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.ProfileModel" Collapsed="true">
+    <Position X="10" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAEQAgAAAAAAEEAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Models\AuthenticationModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.profileData" Collapsed="true">
+    <Position X="8.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AuthenticationModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.ViewerModel" Collapsed="true">
+    <Position X="10" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAACAAEAEAACAAAIAAACAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\AuthenticationModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.BaseModel">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Models\BaseModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.SDKSettings" Collapsed="true">
+    <Position X="3" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\SDKSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.AppSettings" Collapsed="true">
+    <Position X="8.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAIAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAQAAABA=</HashCode>
+      <FileName>Models\SDKSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.StateModel">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.StateData" Collapsed="true">
+    <Position X="4.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAIAACAAIAAAAAAAAA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIState" Collapsed="true">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAg=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIServicesState" Collapsed="true">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>KAAAAAAAACAAAAAgABAAAAAAAAAABAAAAAAAACQCIAA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIServicesUsersState" Collapsed="true">
+    <Position X="4.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAACAAAAAAAAAAAAAAAAADAACAAAAAEAAIAAACAAA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIServicesAnalyticsState" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAAAAAAAII=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIServicesMarketingState" Collapsed="true">
+    <Position X="6.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAABAAAEAAEAAAAAAAAA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIServicesAdsState" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIServicesGamingState" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAEAAAAAAAAAAAhEAQAAIgABAA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIServicesCloudState" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAABAAAAAAAAAAAAAAAAACIAIAAAAABA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIServicesOfficeState" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAGAAAAAAAAAIAAAAAAAAAAKAAAIAAAAAAAACAAA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIServicesReportsState" Collapsed="true">
+    <Position X="11.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAUAQAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIServicesLocalizationState" Collapsed="true">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APIServicesOtherState" Collapsed="true">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAAAgAAAAAAAAAAAAAAAAQAAAg=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Models.APISDKState" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAgAAAAAEIEAAAIAgAAAAAAAAAAAgAAAEgAAAAAA=</HashCode>
+      <FileName>Models\StateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Ocugine" Collapsed="true">
+    <Position X="3" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>0EAAECQAAAAAEAQgAIACCCAAAACABAAI0AAIACACIBg=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Auth" Collapsed="true">
+    <Position X="10" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAEAAABAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Analytics" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.GameServices" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Payments" Collapsed="true">
+    <Position X="4.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Notifications" Collapsed="true">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Marketing" Collapsed="true">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Ads" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Backend" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Reporting" Collapsed="true">
+    <Position X="11.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Perfomance" Collapsed="true">
+    <Position X="6.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Backoffice" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Localization" Collapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.UI" Collapsed="true">
+    <Position X="6.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ocugine_SDK.Utils" Collapsed="true">
+    <Position X="8.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAACAAAA=</HashCode>
+      <FileName>Ocugine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Ocugine_SDK.Models.SDKModules" Collapsed="true">
+    <Position X="3" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIgAgAAAABgAAAgAAAAAAAEAAAIAAgAAIAAEFAEEAA=</HashCode>
+      <FileName>Models\SDKModules.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
