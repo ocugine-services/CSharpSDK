@@ -67,7 +67,8 @@ namespace Ocugine_SDK
 
         // Public Class Params
         public const string OAUTH_OBJECT = "oauth";     // Oauth Object
-        public const string USERS_OBJECT = "users";
+        public const string USERS_OBJECT = "users";      
+        public const string SETTINGS_OBJECT = "api_settings";
         public const string LOCALE_OBJECT = "localization";     // Oauth Object
 
         //============================================================
@@ -953,6 +954,39 @@ namespace Ocugine_SDK
                 error(ex.Message); // Show Error
                 return false;
             }
+        }
+
+        //============================================================
+        //  @class      Users
+        //  @method     GetSettings()
+        //  @type       Static Void
+        //  @usage      Get settings info
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public delegate void OnGetSettingsSuccess(APISettingsModel data); // Returns OAuthTokenModel
+        public delegate void OnGetSettingsError(string code); // Returns error code
+        public async void GetSettings(OnGetSettingsSuccess complete, OnGetSettingsError error)
+        {
+            await GetSettingsAsync(complete, error);
+        }
+        public async Task<bool> GetSettingsAsync(OnGetSettingsSuccess complete, OnGetSettingsError error)
+        {
+            var authContent = new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
+                    };
+            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.SETTINGS_OBJECT + "/get_settings", formContent,
+                ((string data) => { // Response
+                    APISettingsModel state = JsonConvert.DeserializeObject<APISettingsModel>(data); // Deserialize Object
+                    complete(state); // Return Data                       
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
         }
 
 

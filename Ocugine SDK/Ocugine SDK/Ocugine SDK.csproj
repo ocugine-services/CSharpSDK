@@ -52,6 +52,7 @@
     <Compile Include="Models\SDKSettings.cs" />
     <Compile Include="Models\StateModel.cs" />
     <Compile Include="Models\UsersModel.cs" />
+    <Compile Include="Models\UtilsModel.cs" />
     <Compile Include="Ocugine.cs" />
     <Compile Include="Models\AuthenticationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
