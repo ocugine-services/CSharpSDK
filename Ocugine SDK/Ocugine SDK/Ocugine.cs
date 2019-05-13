@@ -557,8 +557,9 @@ namespace Ocugine_SDK
     public class Localization{
         
         // Private Class Params
-        private Ocugine sdk_instance;                                    // SDK Instance
-        private Dictionary<string, Dictionary<string, string>> Cache;    // Localization cache
+        private Ocugine sdk_instance; // SDK Instance
+        private Dictionary<string, LanguageInfo> LangInfoCache = new Dictionary<string, LanguageInfo>(); // Localization cache
+        private Dictionary<string, Dictionary<string, LocaleInfo>> LocInfoCache = new Dictionary<string, Dictionary<string, LocaleInfo>>(); // Localization cache
 
         //============================================================
         //  @class      Localization
@@ -590,19 +591,28 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetLangAsync(string lang_code, OnGetLangComplete complete, OnGetLangError error) //  (bool) Get lang
         {
-            var formContent = new FormUrlEncodedContent(new[]{
+            if (LangInfoCache.ContainsKey(lang_code)) // If cached
+            {
+                complete(LangInfoCache[lang_code]);
+                return true;
+            }
+            else // If not cached
+            {
+                var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
                 new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
                 new KeyValuePair<string, string>("code", $"{lang_code}"), // Code language
             });
-            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_lang", formContent,
-                ((string data) => { // Response
-                    LanguageInfo state = JsonConvert.DeserializeObject<LanguageInfo>(data); // Deserialize Object    
-                    complete(state);
-                }),
-            ((string code) => { // Error
+                return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_lang", formContent,
+                    ((string data) => { // Response
+                        LanguageInfo state = JsonConvert.DeserializeObject<LanguageInfo>(data); // Deserialize Object    
+                        LangInfoCache[lang_code] = state;
+                        complete(state);
+                    }),
+                ((string code) => { // Error
                 error(code);
-            }));
+                }));
+            }            
         }
 
         //============================================================
@@ -624,20 +634,33 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetLocaleAsync(string lang_code, string locale_code, OnGetLocaleComplete complete, OnGetLocaleError error) // (bool) Get locale
         {
-            var formContent = new FormUrlEncodedContent(new[]{
+            if (LocInfoCache.ContainsKey(lang_code) && LocInfoCache[lang_code].ContainsKey(locale_code)) // If has lang and locale in thot lang
+            {
+                Console.Write("кэш-");
+                complete(LocInfoCache[lang_code][locale_code]);               
+                return true;
+            }
+            else
+            {
+                var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
                 new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
                 new KeyValuePair<string, string>("lang", $"{lang_code}"), // Code language
                 new KeyValuePair<string, string>("code", $"{locale_code}"), // Code locale
             });
-            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_locale", formContent,
-                ((string data) => { // Response
-                    LocaleInfo state = JsonConvert.DeserializeObject<LocaleInfo>(data); // Deserialize Object    
-                    complete(state);
-                }),
-            ((string code) => { // Error
+                return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_locale", formContent,
+                    ((string data) => { // Response
+                        LocaleInfo state = JsonConvert.DeserializeObject<LocaleInfo>(data); // Deserialize Object   
+                        if (LocInfoCache.ContainsKey(lang_code))
+                            LocInfoCache[lang_code][locale_code] = state;
+                        else
+                            LocInfoCache[lang_code] = new Dictionary<string, LocaleInfo> { { locale_code, state } };
+                        complete(state);
+                    }),
+                ((string code) => { // Error
                 error(code);
-            }));
+                }));
+            }           
         }
     }
 
