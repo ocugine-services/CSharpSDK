@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
+using System.IO;
 
 //===================================================
 //  Ocugine SDK
@@ -66,10 +67,11 @@ namespace Ocugine_SDK
         private const string STATE_OBJECT = "state";    // State Object
 
         // Public Class Params
-        public const string OAUTH_OBJECT = "oauth";     // Oauth Object
+        public const string OAUTH_OBJECT = "oauth";     
         public const string USERS_OBJECT = "users";      
         public const string SETTINGS_OBJECT = "api_settings";
-        public const string LOCALE_OBJECT = "localization";     // Oauth Object
+        public const string LOCALE_OBJECT = "localization";
+        public const string CLOUD_OBJECT = "cloud";
 
         //============================================================
         //  @class      General
@@ -489,6 +491,75 @@ namespace Ocugine_SDK
         public Backend(Ocugine instance, string route = "/auth/"){
             sdk_instance = instance; // Set SDK Instance
         }
+
+        //============================================================
+        //  @class      Backend
+        //  @method     GetContentList()
+        //  @type       Static Async Void
+        //  @usage      Get content list
+        //  @args       (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================   
+        public delegate void OnGetContentListComplete(ContentListInfo data);
+        public delegate void OnGetContentListError(string code);
+        public async void GetContentList(OnGetContentListComplete complete, OnGetContentListError error) // Get lang
+        {
+            await GetContentListAsync(complete, error);
+        }
+        public async Task<bool> GetContentListAsync(OnGetContentListComplete complete, OnGetContentListError error) //  (bool) Get lang
+        {
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}"), // Language
+            });
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.CLOUD_OBJECT + "/get_content_list", formContent,
+                ((string data) => { // Response
+                    ContentListInfo state = JsonConvert.DeserializeObject<ContentListInfo>(data); // Deserialize Object   
+                    complete(state);
+                }),
+            ((string code) => { // Error
+                    error(code);
+            }));
+
+        }
+
+        //============================================================
+        //  @class      Backend
+        //  @method     GetContentList()
+        //  @type       Static Async Void
+        //  @usage      Get content list
+        //  @args       (double) cid - Content id
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================   
+        public delegate void OnGetContentComplete(ContentInfo data);
+        public delegate void OnGetContentError(string code);
+        public async void GetContent(double cid, OnGetContentComplete complete, OnGetContentError error) // Get lang
+        {
+            await GetContentAsync(cid, complete, error);
+        }
+        public async Task<bool> GetContentAsync(double cid, OnGetContentComplete complete, OnGetContentError error) //  (bool) Get lang
+        {
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}"), // Language
+                new KeyValuePair<string, string>("cid", $"{cid}"), // Language
+            });
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.CLOUD_OBJECT + "/get_content", formContent,
+                ((string data) => { // Response
+                    ContentInfo state = JsonConvert.DeserializeObject<ContentInfo>(data); // Deserialize Object   
+                    complete(state);
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
+
+        }
+
     }
 
     //===================================================
@@ -698,7 +769,7 @@ namespace Ocugine_SDK
         //              (void) error - Error Callback
         //  @return     none
         //============================================================
-        public delegate void OnGetPolicyListSuccess(PolicyListModel data); // Returns OAuthTokenModel
+        public delegate void OnGetPolicyListSuccess(PolicyListInfo data); // Returns OAuthTokenModel
         public delegate void OnGetPolicyListError(string code); // Returns error code
         public async void GetPolicyList(OnGetPolicyListSuccess complete, OnGetPolicyListError error)
         {
@@ -714,7 +785,7 @@ namespace Ocugine_SDK
             var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_policy_list", formContent,
                 ((string data) => { // Response
-                    PolicyListModel state = JsonConvert.DeserializeObject<PolicyListModel>(data); // Deserialize Object
+                    PolicyListInfo state = JsonConvert.DeserializeObject<PolicyListInfo>(data); // Deserialize Object
                     complete(state); // Return Data                       
                 }),
             ((string code) => { // Error
@@ -732,7 +803,7 @@ namespace Ocugine_SDK
         //              (void) error - Error Callback
         //  @return     none
         //============================================================
-        public delegate void OnGetPolicyInfoSuccess(PolicyInfoModel data); // Returns OAuthTokenModel
+        public delegate void OnGetPolicyInfoSuccess(PolicyInfo data); // Returns OAuthTokenModel
         public delegate void OnGetPolicyInfoError(string code); // Returns error code
         public async void GetPolicyInfo(double pid, OnGetPolicyInfoSuccess complete, OnGetPolicyInfoError error)
         {
@@ -749,7 +820,7 @@ namespace Ocugine_SDK
             var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_policy_info", formContent,
                 ((string data) => { // Response
-                    PolicyInfoModel state = JsonConvert.DeserializeObject<PolicyInfoModel>(data); // Deserialize Object
+                    PolicyInfo state = JsonConvert.DeserializeObject<PolicyInfo>(data); // Deserialize Object
                     complete(state); // Return Data                       
                 }),
             ((string code) => { // Error
@@ -867,8 +938,79 @@ namespace Ocugine_SDK
                 }
             }
         }
-        
-        /* TODO: Доделать документацию */
+
+        //============================================================
+        //  @class      UI
+        //  @method     DownloadContent()
+        //  @type       Static Async Void
+        //  @usage      Get token by Oauth protocol
+        //  @args       (string / string[]) grants - Grants for project
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================   
+        public delegate void OnContentDownloadSuccsess(string data);
+        public delegate void OnContentDownloadError(string code);
+        public async void DownloadContent(double cid, string path, OnContentDownloadSuccsess complete, OnContentDownloadError error) // Get and return login form with all permissions
+        {
+            /** checking Backend module **/
+            await DownloadContentAsync(cid, path, complete, error);
+        }
+        private async Task<bool> DownloadContentAsync(double cid, string path, OnContentDownloadSuccsess complete, OnContentDownloadError error) // Get and return login form with all permissions
+        {
+            try
+            {
+                sdk_instance.backend.GetHashCode();
+                try
+                {
+                    ContentInfo.SubModel.InfoModel fileinfo = new ContentInfo.SubModel.InfoModel();
+                    switch (await sdk_instance.backend.GetContentAsync(cid, (ContentInfo ci) => { fileinfo = ci.data.info; }, (string code) => { error(code); }))
+                    {
+                        case true:
+                            {
+                                if (!File.Exists(path + fileinfo.content_slug) || new System.IO.FileInfo(path + fileinfo.content_slug).Length != fileinfo.content_size)
+                                {
+                                    System.Net.WebClient wc = new System.Net.WebClient();
+                                    wc.DownloadFile(fileinfo.content_url, path + fileinfo.content_slug);
+                                    complete(path + fileinfo.content_slug);
+                                    return true;
+                                }
+                                else
+                                {
+                                    switch (sdk_instance.settings.language)
+                                    {
+                                        case "RU": { error("Файл уже существует"); } break;
+                                        default: { error("File already exists"); } break;
+                                    }
+                                    return false;
+                                }
+                            }
+                        default:
+                            {
+                                return false;
+                            }
+                    }
+                }
+                catch (Exception)
+                {
+                    switch (sdk_instance.settings.language)
+                    {
+                        case "RU": { error($"Ошибка при загрузке файла, проверьте правильность пути"); } break;
+                        default: { error("An error occured while downloading file, check path"); } break;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                switch (sdk_instance.settings.language)
+                {
+                    case "RU": { error("Для использования метода DownloadContent необходимо подключить модуль Backend"); } break;
+                    default: { error("Method DownloadContent requires Backend module"); } break;
+                }
+                return false;
+            }
+        }
     }
 
     //===================================================
@@ -965,7 +1107,7 @@ namespace Ocugine_SDK
         //              (void) error - Error Callback
         //  @return     none
         //============================================================
-        public delegate void OnGetSettingsSuccess(APISettingsModel data); // Returns OAuthTokenModel
+        public delegate void OnGetSettingsSuccess(APISettingsInfo data); // Returns OAuthTokenModel
         public delegate void OnGetSettingsError(string code); // Returns error code
         public async void GetSettings(OnGetSettingsSuccess complete, OnGetSettingsError error)
         {
@@ -981,7 +1123,7 @@ namespace Ocugine_SDK
             var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.SETTINGS_OBJECT + "/get_settings", formContent,
                 ((string data) => { // Response
-                    APISettingsModel state = JsonConvert.DeserializeObject<APISettingsModel>(data); // Deserialize Object
+                    APISettingsInfo state = JsonConvert.DeserializeObject<APISettingsInfo>(data); // Deserialize Object
                     complete(state); // Return Data                       
                 }),
             ((string code) => { // Error

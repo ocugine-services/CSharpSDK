@@ -23,35 +23,34 @@ using System.Threading.Tasks;
 //===================================================
 namespace Ocugine_SDK.Models
 {
-    public class UsersModel
+    public class BackendModel
     {
 
     }
 
     //===================================================
-    //  Ocugine Policy List Model
+    //  Ocugine Content List Model
     //===================================================
-    public class PolicyListInfo : BaseModel
+    public class ContentListInfo : BaseModel
     {
         public SubModel data;
         public class SubModel
         {
-            // Модель инфо
             public ListModel[] list;
             public class ListModel
             {
-                public string policy_name = "";
-                public int uid = 0;                
-                public string time = "";
+                public double uid = 0;
+                public double project_id = 0;
+                public string content_slug = "";
+                public double time = 0;
             }
-
         }
     }
 
     //===================================================
-    //  Ocugine Policy Info Model
+    //  Ocugine Content Model
     //===================================================
-    public class PolicyInfo : BaseModel
+    public class ContentInfo : BaseModel
     {
         public SubModel data;
         public class SubModel
@@ -60,13 +59,14 @@ namespace Ocugine_SDK.Models
             public InfoModel info;
             public class InfoModel
             {
-                public int uid = 0;
-                public string policy_name = "";
-                public string policy_text = "";
-                public string project_id = "";
-                public string time = "";
+                public double uid = 0;
+                public double project_id = 0;
+                public string content_slug = "";
+                public double content_size;
+                public string content_url;
+                public double time = 0;
             }
-            
         }
     }
+
 }

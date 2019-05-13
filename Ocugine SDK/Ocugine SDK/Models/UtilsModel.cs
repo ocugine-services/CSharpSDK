@@ -31,7 +31,7 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Policy List Model
     //===================================================
-    public class APISettingsModel : BaseModel
+    public class APISettingsInfo : BaseModel
     {
         public SubModel data;
         public class SubModel

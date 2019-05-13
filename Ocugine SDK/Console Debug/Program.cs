@@ -23,7 +23,7 @@ namespace Console_Debug
             }, new SDKSettings
             {
                 language = "RU",
-                modules = new SDKModules[] { SDKModules.All },
+                modules = new SDKModules[] { SDKModules.UI, SDKModules.Backend },
                 auth_timeout = 10
             });
 
@@ -48,20 +48,31 @@ namespace Console_Debug
             //SDK.locale.GetLocale("ru", "test-node", (LocaleInfo o) => { Console.WriteLine($"{o.data.value}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест получения списка политик **/
-            //SDK.users.GetPolicyList((PolicyListModel o) => { foreach(PolicyListModel.SubModel.ListModel d in o.data.list) Console.WriteLine($"[{d.uid}] - {d.policy_name}"); }, (string s) => { Console.WriteLine(s); });
+            //SDK.users.GetPolicyList((PolicyListInfo o) => { foreach(PolicyListInfo.SubModel.ListModel d in o.data.list) Console.WriteLine($"[{d.uid}] - {d.policy_name}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест получения информации о политике **/
-            //SDK.users.GetPolicyInfo(1, (PolicyInfoModel o) => { Console.WriteLine($"{o.data.info.policy_name} {o.data.info.policy_text}"); }, (string s) => { Console.WriteLine(s); });
-            //SDK.users.GetPolicyInfo(2, (PolicyInfoModel o) => { Console.WriteLine($"{o.data.info.policy_name} {o.data.info.policy_text}"); }, (string s) => { Console.WriteLine(s); });
+            //SDK.users.GetPolicyInfo(1, (PolicyInfo o) => { Console.WriteLine($"{o.data.info.policy_name} {o.data.info.policy_text}"); }, (string s) => { Console.WriteLine(s); });
+            //SDK.users.GetPolicyInfo(2, (PolicyInfo o) => { Console.WriteLine($"{o.data.info.policy_name} {o.data.info.policy_text}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест получения настроек **/
-            SDK.utils.GetSettings((APISettingsModel o) => { Console.WriteLine($"{o.data.configs.uid} {o.data.configs.limitation}"); }, (string s) => { Console.WriteLine(s); });
+            //SDK.utils.GetSettings((APISettingsInfo o) => { Console.WriteLine($"{o.data.configs.uid} {o.data.configs.limitation}"); }, (string s) => { Console.WriteLine(s); });
+
+            /** Тест получения списка контента **/
+            //SDK.backend.GetContentList((o) => { foreach(ContentListInfo.SubModel.ListModel d in o.data.list) Console.WriteLine($"{d.content_slug} {d.uid}"); }, (string s) => { Console.WriteLine(s); });
+
+            /** Тест получения конкретного контента **/
+            //SDK.backend.GetContent(1, (ContentInfo o) => { Console.WriteLine($"{o.data.info.content_size} {o.data.info.content_slug} {o.data.info.content_url}"); }, (string s) => { Console.WriteLine(s); });
+
+            /** Тест загрузки контента **/
+            SDK.ui.DownloadContent(1, @"C:\IBS\", (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); });
+
 
             /** Тест  **/
-
-
+            /** Тест  **/
+            /** Тест  **/
             /** Тест  **/
 
+            /** Тест  **/
 
             Console.Read();
         }
