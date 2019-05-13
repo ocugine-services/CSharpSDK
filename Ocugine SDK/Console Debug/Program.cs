@@ -23,12 +23,12 @@ namespace Console_Debug
             }, new SDKSettings
             {
                 language = "RU",
-                modules = new SDKModules[] { SDKModules.UI, SDKModules.Auth },
+                modules = new SDKModules[] { SDKModules.UI, SDKModules.Auth, SDKModules.Localization },
                 auth_timeout = 10
             });
 
             /** Тест вызова формы аутентификации **/
-            SDK.ui.GetAuthForm((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); }, new string[]{ "all" });
+            //SDK.ui.GetAuthForm((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); }, new string[]{ "all" });
 
             /** Тест получения ссылки на авторизацию **/
             //SDK.auth.GetLink((string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); }, "somebody,once,told,me");
@@ -45,7 +45,7 @@ namespace Console_Debug
             //SDK.locale.GetLang("ru", (LanguageInfo o) => { Console.WriteLine($"{o.data.name}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест получения информации о языке **/
-            //SDK.locale.GetLocale("ru", "test-node", (LocaleInfo o) => { Console.WriteLine($"{o.data.value}"); }, (string s) => { Console.WriteLine(s); });
+            SDK.locale.GetLocale("ru", "test-node", (LocaleInfo o) => { Console.WriteLine($"{o.data.value}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест  **/
 

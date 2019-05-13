@@ -557,7 +557,8 @@ namespace Ocugine_SDK
     public class Localization{
         
         // Private Class Params
-        private Ocugine sdk_instance;            // SDK Instance
+        private Ocugine sdk_instance;                                    // SDK Instance
+        private Dictionary<string, Dictionary<string, string>> Cache;    // Localization cache
 
         //============================================================
         //  @class      Localization
@@ -583,18 +584,18 @@ namespace Ocugine_SDK
         //============================================================   
         public delegate void OnGetLangComplete(LanguageInfo data);
         public delegate void OnGetLangError(string code);
-        public void GetLang(string lang_code, OnGetLangComplete complete, OnGetLangError error) // Get lang
+        public async void GetLang(string lang_code, OnGetLangComplete complete, OnGetLangError error) // Get lang
         {
-            GetLangAsync(lang_code, complete, error);
+            await GetLangAsync(lang_code, complete, error);
         }
-        public async void GetLangAsync(string lang_code, OnGetLangComplete complete, OnGetLangError error) //  (bool) Get lang
+        public async Task<bool> GetLangAsync(string lang_code, OnGetLangComplete complete, OnGetLangError error) //  (bool) Get lang
         {
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
                 new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
                 new KeyValuePair<string, string>("code", $"{lang_code}"), // Code language
             });
-            await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_lang", formContent,
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_lang", formContent,
                 ((string data) => { // Response
                     LanguageInfo state = JsonConvert.DeserializeObject<LanguageInfo>(data); // Deserialize Object    
                     complete(state);
@@ -617,11 +618,11 @@ namespace Ocugine_SDK
         //============================================================   
         public delegate void OnGetLocaleComplete(LocaleInfo data);
         public delegate void OnGetLocaleError(string code);
-        public void GetLocale(string lang_code, string locale_code, OnGetLocaleComplete complete, OnGetLocaleError error) // Get locale
+        public async void GetLocale(string lang_code, string locale_code, OnGetLocaleComplete complete, OnGetLocaleError error) // Get locale
         {
-            GetLocaleAsync(lang_code, locale_code, complete, error);
+            await GetLocaleAsync(lang_code, locale_code, complete, error);
         }
-        public async void GetLocaleAsync(string lang_code, string locale_code, OnGetLocaleComplete complete, OnGetLocaleError error) // (bool) Get locale
+        public async Task<bool> GetLocaleAsync(string lang_code, string locale_code, OnGetLocaleComplete complete, OnGetLocaleError error) // (bool) Get locale
         {
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
@@ -629,7 +630,7 @@ namespace Ocugine_SDK
                 new KeyValuePair<string, string>("lang", $"{lang_code}"), // Code language
                 new KeyValuePair<string, string>("code", $"{locale_code}"), // Code locale
             });
-            await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_locale", formContent,
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_locale", formContent,
                 ((string data) => { // Response
                     LocaleInfo state = JsonConvert.DeserializeObject<LocaleInfo>(data); // Deserialize Object    
                     complete(state);
