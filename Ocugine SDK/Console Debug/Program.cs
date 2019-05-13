@@ -23,7 +23,7 @@ namespace Console_Debug
             }, new SDKSettings
             {
                 language = "RU",
-                modules = new SDKModules[] { SDKModules.UI, SDKModules.Auth, SDKModules.Localization },
+                modules = new SDKModules[] { SDKModules.All },
                 auth_timeout = 10
             });
 
@@ -46,12 +46,13 @@ namespace Console_Debug
 
             /** Тест получения информации о языке **/
             //SDK.locale.GetLocale("ru", "test-node", (LocaleInfo o) => { Console.WriteLine($"{o.data.value}"); }, (string s) => { Console.WriteLine(s); });
-            
+
+            /** Тест получения списка политик **/
+            //SDK.users.GetPolicyList((PolicyListModel o) => { foreach(PolicyListModel.SubModel.ListModel d in o.data.list) Console.WriteLine($"[{d.uid}] - {d.policy_name}"); }, (string s) => { Console.WriteLine(s); });
+
             /** Тест  **/
-
-
-            /** Тест  **/
-
+            //SDK.users.GetPolicyInfo(1, (PolicyInfoModel o) => { Console.WriteLine($"{o.data.info.policy_name} {o.data.info.policy_text}"); }, (string s) => { Console.WriteLine(s); });
+            //SDK.users.GetPolicyInfo(2, (PolicyInfoModel o) => { Console.WriteLine($"{o.data.info.policy_name} {o.data.info.policy_text}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест  **/
 

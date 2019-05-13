@@ -58,6 +58,7 @@ namespace Ocugine_SDK
         public Perfomance perfomance;                   // Perfomance Services
         public Backoffice office;                       // Office Services
         public Localization locale;                     // Locale Services
+        public Users users;                               // User Class
         public UI ui;                                   // UI Module
         public Utils utils;                             // SDK Utils
 
@@ -66,6 +67,7 @@ namespace Ocugine_SDK
 
         // Public Class Params
         public const string OAUTH_OBJECT = "oauth";     // Oauth Object
+        public const string USERS_OBJECT = "users";
         public const string LOCALE_OBJECT = "localization";     // Oauth Object
 
         //============================================================
@@ -172,6 +174,7 @@ namespace Ocugine_SDK
             if (settings.modules.Contains(SDKModules.Perfomance) || settings.modules.Contains(SDKModules.All)) perfomance = new Perfomance(this); // Create Instance
             if (settings.modules.Contains(SDKModules.Backoffice) || settings.modules.Contains(SDKModules.All)) office = new Backoffice(this); // Create Instance
             if (settings.modules.Contains(SDKModules.Localization) || settings.modules.Contains(SDKModules.All)) locale = new Localization(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Users) || settings.modules.Contains(SDKModules.All)) users = new Users(this); // Create Instance
             if (settings.modules.Contains(SDKModules.UI) || settings.modules.Contains(SDKModules.All)) ui = new UI(this); // Create Instance
             utils = new Utils(this); // Create Instance 
             // if (settings.modules == SDKModules.Utils || settings.modules == SDKModules.All) 
@@ -238,7 +241,6 @@ namespace Ocugine_SDK
                 error(code);
             }));
         }
-
 
         //============================================================
         //  @class      Auth
@@ -661,6 +663,97 @@ namespace Ocugine_SDK
                 error(code);
                 }));
             }           
+        }
+    }
+
+    //===================================================
+    //  Ocugine Users Class
+    //===================================================
+    public class Users
+    {
+
+        // Private Class Params
+        private Ocugine sdk_instance;            // SDK Instance
+
+        //============================================================
+        //  @class      Users
+        //  @method     Users
+        //  @type       Constructor
+        //  @usage      Initialize Users Module
+        //  @args       none
+        //  @return     none
+        //============================================================
+        public Users(Ocugine instance, string route = "/users/")
+        {
+            sdk_instance = instance; // Set SDK Instance
+        }
+
+        //============================================================
+        //  @class      Users
+        //  @method     GetPolicyList()
+        //  @type       Static Void
+        //  @usage      Get policy list
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public delegate void OnGetPolicyListSuccess(PolicyListModel data); // Returns OAuthTokenModel
+        public delegate void OnGetPolicyListError(string code); // Returns error code
+        public async void GetPolicyList(OnGetPolicyListSuccess complete, OnGetPolicyListError error)
+        {
+            await GetPolicyListAsync(complete, error);
+        }
+        public async Task<bool> GetPolicyListAsync(OnGetPolicyListSuccess complete, OnGetPolicyListError error)
+        {
+            var authContent = new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
+                    };
+            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_policy_list", formContent,
+                ((string data) => { // Response
+                    PolicyListModel state = JsonConvert.DeserializeObject<PolicyListModel>(data); // Deserialize Object
+                    complete(state); // Return Data                       
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
+        }
+
+        //============================================================
+        //  @class      Users
+        //  @method     GetPolicyInfo()
+        //  @type       Static Void
+        //  @usage      Get policy info
+        //              (double) pid - Id of policy
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public delegate void OnGetPolicyInfoSuccess(PolicyInfoModel data); // Returns OAuthTokenModel
+        public delegate void OnGetPolicyInfoError(string code); // Returns error code
+        public async void GetPolicyInfo(double pid, OnGetPolicyInfoSuccess complete, OnGetPolicyInfoError error)
+        {
+            await GetPolicyInfoAsync(pid, complete, error);
+        }
+        public async Task<bool> GetPolicyInfoAsync(double pid, OnGetPolicyInfoSuccess complete, OnGetPolicyInfoError error)
+        {
+            var authContent = new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}"),       // Language
+                        new KeyValuePair<string, string>("pid", $"{pid}")       // Policy id
+                    };
+            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_policy_info", formContent,
+                ((string data) => { // Response
+                    PolicyInfoModel state = JsonConvert.DeserializeObject<PolicyInfoModel>(data); // Deserialize Object
+                    complete(state); // Return Data                       
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
         }
     }
 
