@@ -306,10 +306,15 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetLinkAsync(OnGetLinkComplete complete, OnGetLinkError error, string[] grants)
         {
+            string stringgrants = "";
+            if (grants.Contains("all"))
+                stringgrants = "all";
+            else
+                foreach (string s in grants) stringgrants += $"{s},";
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
                 new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
-                new KeyValuePair<string, string>("grants", $"{grants}"), // Permissions
+                new KeyValuePair<string, string>("grants", $"{stringgrants}".TrimEnd(',')), // Permissions
                 new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
             });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
@@ -331,7 +336,7 @@ namespace Ocugine_SDK
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
                 new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
-                new KeyValuePair<string, string>("grants", $"{grants}"), // Permissions
+                new KeyValuePair<string, string>("grants", $"{(grants.ToLower().Contains("all")?"all":grants.TrimEnd(','))}"), // Permissions
                 new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
             });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
@@ -880,9 +885,7 @@ namespace Ocugine_SDK
             /** Get link and open brower **/         
             bool GotLink = await sdk_instance.auth.GetLinkAsync((string c) => Process.Start(c), (string e) => error(e), grants); // OpenBrowser();      
             if (!GotLink) // Error
-            {
                 return;
-            }
             /** Iteration for auth checking **/
             int timeout = 0; bool GotToken = false; string lasterror = "";
             while (!GotToken && timeout != sdk_instance.settings.auth_timeout) // Set auth waiting time (30 sec)
@@ -919,9 +922,7 @@ namespace Ocugine_SDK
             /** Get link and open brower **/
             bool GotLink = await sdk_instance.auth.GetLinkAsync((string c) => Process.Start(c), (string e) => error(e), grants); // OpenBrowser();   
             if (!GotLink) // Error
-            {
                 return;
-            }
             /** Iteration for auth checking **/
             int timeout = 0; bool GotToken = false; string lasterror = "";
             while (!GotToken && timeout != sdk_instance.settings.auth_timeout) // Set auth waiting time (30 sec)

@@ -23,15 +23,16 @@ namespace Console_Debug
             }, new SDKSettings
             {
                 language = "RU",
-                modules = new SDKModules[] { SDKModules.UI, SDKModules.Backend },
+                modules = new SDKModules[] { SDKModules.Auth, SDKModules.UI },
                 auth_timeout = 10
             });
 
             /** Тест вызова формы аутентификации **/
-            //SDK.ui.GetAuthForm((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); }, new string[]{ "all" });
+            SDK.ui.GetAuthForm((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); }, "profile,messages,");
 
             /** Тест получения ссылки на авторизацию **/
             //SDK.auth.GetLink((string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); }, "somebody,once,told,me");
+            //SDK.auth.GetLink((string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); }, new string[] { "all", "you", "need" });
 
             /** Тест получения токена **/
             //SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
@@ -64,7 +65,7 @@ namespace Console_Debug
             //SDK.backend.GetContent(1, (ContentInfo o) => { Console.WriteLine($"{o.data.info.content_size} {o.data.info.content_slug} {o.data.info.content_url}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест загрузки контента **/
-            SDK.ui.DownloadContent(1, @"C:\IBS\", (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); });
+            //SDK.ui.DownloadContent(1, @"C:\IBS\", (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); });
 
 
             /** Тест  **/
