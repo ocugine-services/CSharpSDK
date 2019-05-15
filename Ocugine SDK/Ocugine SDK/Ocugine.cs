@@ -715,7 +715,6 @@ namespace Ocugine_SDK
         {
             if (LocInfoCache.ContainsKey(lang_code) && LocInfoCache[lang_code].ContainsKey(locale_code)) // If has lang and locale in thot lang
             {
-                Console.Write("кэш-");
                 complete(LocInfoCache[lang_code][locale_code]);               
                 return true;
             }
