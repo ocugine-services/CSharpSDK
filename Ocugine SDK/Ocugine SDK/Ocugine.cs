@@ -264,7 +264,7 @@ namespace Ocugine_SDK
         {
             if(sdk_instance.auth.credentials.token == "" || sdk_instance.auth.credentials.is_auth == false)
             {
-                sdk_instance.auth.credentials.token = "";
+                sdk_instance.auth.credentials.token = ""; sdk_instance.auth.credentials.is_auth = false;
                 switch (sdk_instance.settings.language)
                 {
                     case "RU": { error("Ошибка деавторизации, приложение не авторизовано"); } break;
@@ -315,7 +315,7 @@ namespace Ocugine_SDK
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
                 new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
                 new KeyValuePair<string, string>("grants", $"{stringgrants}".TrimEnd(',')), // Permissions
-                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
+                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // LanguageC:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\Models\BackendModel.cs
             });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
                 ((string data) => { // Response
