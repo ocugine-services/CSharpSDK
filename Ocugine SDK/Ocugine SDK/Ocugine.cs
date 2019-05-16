@@ -971,9 +971,9 @@ namespace Ocugine_SDK
                             {
                                 if (!File.Exists(path.TrimEnd('/') + "/" + fileinfo.content_slug) || new System.IO.FileInfo(path.TrimEnd('/') + "/" + fileinfo.content_slug).Length != fileinfo.content_size)
                                 {
-                                        System.Net.WebClient wc = new System.Net.WebClient();
-                                    wc.DownloadFile(fileinfo.content_url, path + fileinfo.content_slug);
-                                    complete(path + fileinfo.content_slug);
+                                    System.Net.WebClient wc = new System.Net.WebClient();
+                                    wc.DownloadFile(fileinfo.content_url, path.TrimEnd('/') + "/" + fileinfo.content_slug);
+                                    complete(path.TrimEnd('/') + "/" + fileinfo.content_slug);
                                     return true;
                                 }
                                 else
