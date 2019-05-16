@@ -23,7 +23,7 @@ namespace Console_Debug
             }, new SDKSettings
             {
                 language = "RU",
-                modules = new SDKModules[] { SDKModules.Auth, SDKModules.UI },
+                modules = new SDKModules[] { SDKModules.Auth, SDKModules.UI, SDKModules.Backend },
                 auth_timeout = 10
             });
 
@@ -65,7 +65,7 @@ namespace Console_Debug
             //SDK.backend.GetContent(1, (ContentInfo o) => { Console.WriteLine($"{o.data.info.content_size} {o.data.info.content_slug} {o.data.info.content_url}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест загрузки контента **/
-            //SDK.ui.DownloadContent(1, @"C:\IBS\", (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); });
+            SDK.ui.DownloadContent(1, @"C:\IBS\", (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); });
 
 
             /** Тест  **/

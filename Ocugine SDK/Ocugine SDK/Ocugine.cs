@@ -900,7 +900,8 @@ namespace Ocugine_SDK
                     default: { error("Authefication timed out\n" + lasterror); } break;
                 }
             }
-        }        
+        }    
+        
         public async void GetAuthForm(OnAPIInfoComplete complete, OnAPIInfoError error, string[] grants) // Get and return login form with selected permissions
         {
             /** checking Auth module **/
@@ -968,9 +969,9 @@ namespace Ocugine_SDK
                     {
                         case true:
                             {
-                                if (!File.Exists(path + fileinfo.content_slug) || new System.IO.FileInfo(path + fileinfo.content_slug).Length != fileinfo.content_size)
+                                if (!File.Exists(path.TrimEnd('/') + "/" + fileinfo.content_slug) || new System.IO.FileInfo(path.TrimEnd('/') + "/" + fileinfo.content_slug).Length != fileinfo.content_size)
                                 {
-                                    System.Net.WebClient wc = new System.Net.WebClient();
+                                        System.Net.WebClient wc = new System.Net.WebClient();
                                     wc.DownloadFile(fileinfo.content_url, path + fileinfo.content_slug);
                                     complete(path + fileinfo.content_slug);
                                     return true;
