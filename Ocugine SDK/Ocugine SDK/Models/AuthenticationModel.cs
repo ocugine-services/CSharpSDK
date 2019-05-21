@@ -21,7 +21,9 @@ using System.Threading.Tasks;
 //===================================================
 //  Namespace Ocugine SDK
 //===================================================
-namespace Ocugine_SDK.Models{
+
+namespace Ocugine_SDK.Models{   
+
     //===================================================
     //  Ocugine SDK Authentication Model
     //===================================================

@@ -22,13 +22,14 @@ using System.Threading.Tasks;
 //  Namespace Ocugine SDK
 //===================================================
 namespace Ocugine_SDK.Models{
+
     //===================================================
     //  Ocugine SDK Settings
     //===================================================
     public class SDKSettings{
         // General Settings
         public string language = "";           // SDK Language
-        public SDKModules[] modules;             // SDK Modules
+        public SDKModules[] modules;           // SDK Modules
         public int auth_timeout;               // Auth timeout
     }
 

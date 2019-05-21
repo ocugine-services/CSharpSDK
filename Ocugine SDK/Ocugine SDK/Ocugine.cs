@@ -56,7 +56,7 @@ namespace Ocugine_SDK
         public Ads ads;                                 // Ads Services
         public Backend backend;                         // Backend Services
         public Reporting reports;                       // Reporting Services
-        public Perfomance perfomance;                   // Perfomance Services
+        public Performance performance;                   // Performance Services
         public Backoffice office;                       // Office Services
         public Localization locale;                     // Locale Services
         public Users users;                               // User Class
@@ -92,6 +92,7 @@ namespace Ocugine_SDK
             } else { // No SDK Settings
                 settings = new SDKSettings(); // Create SDK Settings
                 settings.language = "EN"; // Set Default Language as EN
+                settings.auth_timeout = 10; // Set Default SDK Settings
             }
 
             // Initialize Modules
@@ -174,7 +175,7 @@ namespace Ocugine_SDK
             if (settings.modules.Contains(SDKModules.Ads) || settings.modules.Contains(SDKModules.All)) ads = new Ads(this); // Create Instance
             if (settings.modules.Contains(SDKModules.Backend) || settings.modules.Contains(SDKModules.All)) backend = new Backend(this); // Create Instance
             if (settings.modules.Contains(SDKModules.Reporting) || settings.modules.Contains(SDKModules.All)) reports = new Reporting(this); // Create Instance
-            if (settings.modules.Contains(SDKModules.Perfomance) || settings.modules.Contains(SDKModules.All)) perfomance = new Perfomance(this); // Create Instance
+            if (settings.modules.Contains(SDKModules.Performance) || settings.modules.Contains(SDKModules.All)) performance = new Performance(this); // Create Instance
             if (settings.modules.Contains(SDKModules.Backoffice) || settings.modules.Contains(SDKModules.All)) office = new Backoffice(this); // Create Instance
             if (settings.modules.Contains(SDKModules.Localization) || settings.modules.Contains(SDKModules.All)) locale = new Localization(this); // Create Instance
             if (settings.modules.Contains(SDKModules.Users) || settings.modules.Contains(SDKModules.All)) users = new Users(this); // Create Instance
@@ -336,7 +337,7 @@ namespace Ocugine_SDK
             var formContent = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
                 new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
-                new KeyValuePair<string, string>("grants", $"{(grants.ToLower().Contains("all")?"all":grants.TrimEnd(','))}"), // Permissions
+                new KeyValuePair<string, string>("grants", $"{(grants.ToLower().Contains("all")?"all":grants.Replace(' ',',').Replace('-',',').TrimEnd(','))}"), // Permissions
                 new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
             });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
@@ -364,7 +365,7 @@ namespace Ocugine_SDK
         //  @method     Analytics
         //  @type       Constructor
         //  @usage      Initialize Analytics Module
-        //  @args       none
+        //  @args       (Ocugine) instance of SDK
         //  @return     none
         //============================================================
         public Analytics(Ocugine instance, string route = "/auth/"){
@@ -589,22 +590,22 @@ namespace Ocugine_SDK
     }
 
     //===================================================
-    //  Ocugine Perfomance Class
+    //  Ocugine Performance Class
     //===================================================
-    public class Perfomance{
+    public class Performance{
 
         // Private Class Params
         private Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
-        //  @class      Perfomance
-        //  @method     Perfomance
+        //  @class      Performance
+        //  @method     Performance
         //  @type       Constructor
-        //  @usage      Initialize Perfomance Module
+        //  @usage      Initialize Performance Module
         //  @args       none
         //  @return     none
         //============================================================
-        public Perfomance(Ocugine instance, string route = "/auth/"){
+        public Performance(Ocugine instance, string route = "/auth/"){
             sdk_instance = instance; // Set SDK Instance
         }
     }
