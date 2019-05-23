@@ -83,6 +83,8 @@ namespace Console_Debug
             }, (string s) => { Console.WriteLine(s); });
 
             /** Тест  **/
+            SDK.users.GetUserByID(17, (UserInfo lo) => { Console.WriteLine(lo.data.base_data.email); }, (string ls) => { Console.WriteLine(ls); });
+
             /** Тест  **/
 
             /** Тест  **/

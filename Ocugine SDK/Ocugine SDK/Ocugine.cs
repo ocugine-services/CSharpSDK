@@ -837,6 +837,39 @@ namespace Ocugine_SDK
 
         //============================================================
         //  @class      Users
+        //  @method     GetUserData()
+        //  @type       Static Void
+        //  @usage      Get data of user by id
+        //  @args       (double) uid - User id
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public async void GetUserByID(double uid, OnGetUserDataSuccess complete, OnGetUserDataError error)
+        {
+            await GetUserByIDAsync(uid, complete, error);
+        }
+        public async Task<bool> GetUserByIDAsync(double uid, OnGetUserDataSuccess complete, OnGetUserDataError error)
+        {
+            var authContent = new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                        new KeyValuePair<string, string>("profile_uid", $"{uid}"),       // Language
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
+                    };
+            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_user_by_id", formContent,
+                ((string data) => { // Response
+                    UserInfo state = JsonConvert.DeserializeObject<UserInfo>(data); // Deserialize Object
+                    complete(state); // Return Data                       
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
+        }
+
+        //============================================================
+        //  @class      Users
         //  @method     GetPolicyList()
         //  @type       Static Void
         //  @usage      Get policy list
