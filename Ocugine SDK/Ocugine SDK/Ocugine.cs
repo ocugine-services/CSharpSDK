@@ -768,7 +768,7 @@ namespace Ocugine_SDK
 
         //============================================================
         //  @class      Users
-        //  @method     GetPolicyList()
+        //  @method     GetUsersList()
         //  @type       Static Void
         //  @usage      Get users list
         //  @args       (int) page - Page number    
@@ -801,6 +801,40 @@ namespace Ocugine_SDK
             }));
         }
 
+        //============================================================
+        //  @class      Users
+        //  @method     FindUser()
+        //  @type       Static Void
+        //  @usage      Find user by Name and Surname
+        //  @args       (string) search - Search request  
+        //              (int) page - Search page
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public async void FindUser(string search, int page, OnGetUsersListSuccess complete, OnGetUsersListError error)
+        {
+            await FindUserAsync(search, page, complete, error);
+        }
+        public async Task<bool> FindUserAsync(string search, int page, OnGetUsersListSuccess complete, OnGetUsersListError error)
+        {
+            var authContent = new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key                       
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}"),       // Language
+                        new KeyValuePair<string, string>("search", $"{search}"),       // Search request
+                        new KeyValuePair<string, string>("page", $"{page}")       // Search page
+                    };
+            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/find_user", formContent,
+                ((string data) => { // Response
+                    UsersListInfo state = JsonConvert.DeserializeObject<UsersListInfo>(data); // Deserialize Object
+                    complete(state); // Return Data                       
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
+        }
         //============================================================
         //  @class      Users
         //  @method     GetUserData()
@@ -837,7 +871,7 @@ namespace Ocugine_SDK
 
         //============================================================
         //  @class      Users
-        //  @method     GetUserData()
+        //  @method     GetUserByID()
         //  @type       Static Void
         //  @usage      Get data of user by id
         //  @args       (double) uid - User id

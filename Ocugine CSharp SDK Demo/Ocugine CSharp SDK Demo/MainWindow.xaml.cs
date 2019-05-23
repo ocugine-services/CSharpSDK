@@ -52,12 +52,15 @@ namespace Ocugine_CSharp_SDK_Demo{
             InitializeComponent(); // Initialize WPF Components
 
             // Initialize Ocugine SDK
-            SDK = new Ocugine(new AppSettings {
+            Ocugine SDK = new Ocugine(new AppSettings
+            {
                 app_id = 1,
                 app_key = "c46361ae80c1679d637c2f23968a4dc5d5ea2a65"
-            }, new SDKSettings {
-                language = "EN",
-                modules = SDKModules.All
+            }, new SDKSettings
+            {
+                language = "RU",
+                modules = new SDKModules[] { SDKModules.All },
+                auth_timeout = 10
             });
 
             // Send Test Request
