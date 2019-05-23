@@ -39,7 +39,7 @@ namespace Console_Debug
             //SDK.auth.GetLink((string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); }, new string[] { "all", "you", "need" });
 
             /** Тест получения токена **/
-            //SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
+            SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест логаута **/
             //SDK.auth.GetToken((OAuthTokenModel o) => { 
@@ -72,10 +72,16 @@ namespace Console_Debug
             /** Тест загрузки контента **/
             //SDK.ui.DownloadContent(1, @"C:\IBS\", (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); });
 
-            /** Тест  **/
-            //SDK.users.GetUsersList(1, (UsersListInfo o) => { foreach (UsersListInfo.SubModel.ListModel d in o.data.list) Console.WriteLine($"[{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
+            /** Тест получения списка пользователей **/
+            SDK.users.GetUsersList(1, (UsersListInfo o) => { foreach (UserInfo.SubModel.BaseData d in o.data.list) Console.WriteLine($"[{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест  **/
+            SDK.auth.GetToken((OAuthTokenModel o) =>
+            {
+                Console.WriteLine(SDK.auth.credentials.token);
+                SDK.users.GetUserData((UserInfo lo) => { Console.WriteLine(lo.data.base_data.email); }, (string ls) => { Console.WriteLine(ls); });
+            }, (string s) => { Console.WriteLine(s); });
+
             /** Тест  **/
             /** Тест  **/
 

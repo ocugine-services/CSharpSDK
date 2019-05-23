@@ -37,8 +37,24 @@ namespace Ocugine_SDK.Models
         public class SubModel
         {
             // Модель инфо
-            public ListModel[] list;
-            public class ListModel
+            public UserInfo.SubModel.BaseData[] list;
+        }
+    }
+
+    //===================================================
+    //  Ocugine Users Model
+    //===================================================
+    public class UserInfo : BaseModel
+    {
+        public SubModel data;
+
+        public class SubModel
+        {
+            public BaseData base_data;
+            public AdvancedData advanced_data;
+            public GroupData group_data;
+
+            public class BaseData
             {
                 public string uid = "";
                 public string first_name = "";
@@ -49,6 +65,15 @@ namespace Ocugine_SDK.Models
                 public string profile_type = "";
             }
 
+            public class AdvancedData
+            {
+
+            }
+
+            public class GroupData
+            {
+
+            }
         }
     }
 
@@ -93,4 +118,5 @@ namespace Ocugine_SDK.Models
             
         }
     }
+
 }

@@ -96,7 +96,7 @@ namespace Ocugine_SDK.Models{
         public class SubModel
         {
             public string access_token = "";    // Access token
-            public string[] grants = null;      // UNIX Expire time
+            public string[] grants = null;      // Grants
         }
     }
 

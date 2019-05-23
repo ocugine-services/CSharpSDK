@@ -803,6 +803,40 @@ namespace Ocugine_SDK
 
         //============================================================
         //  @class      Users
+        //  @method     GetUserData()
+        //  @type       Static Void
+        //  @usage      Get data of current user
+        //  @args       (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public delegate void OnGetUserDataSuccess(UserInfo data); // Returns OAuthTokenModel
+        public delegate void OnGetUserDataError(string code); // Returns error code
+        public async void GetUserData(OnGetUserDataSuccess complete, OnGetUserDataError error)
+        {
+            await GetUserDataAsync(complete, error);
+        }
+        public async Task<bool> GetUserDataAsync(OnGetUserDataSuccess complete, OnGetUserDataError error)
+        {
+            var authContent = new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                        new KeyValuePair<string, string>("access_token", $"{sdk_instance.auth.credentials.token}"),       // Language
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
+                    };
+            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_user_data", formContent,
+                ((string data) => { // Response
+                    UserInfo state = JsonConvert.DeserializeObject<UserInfo>(data); // Deserialize Object
+                    complete(state); // Return Data                       
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
+        }
+
+        //============================================================
+        //  @class      Users
         //  @method     GetPolicyList()
         //  @type       Static Void
         //  @usage      Get policy list
@@ -1099,7 +1133,7 @@ namespace Ocugine_SDK
                         return false;
                     }
                 } catch (Exception ex){ // Failed to decode data
-                    error(ex.Message); // Show Error
+                    error(ex.Message+ex.StackTrace); // Show Error
                     return false;
                 }
             } catch (Exception ex){ // Failed to send request
