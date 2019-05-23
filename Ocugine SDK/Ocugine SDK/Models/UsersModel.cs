@@ -29,6 +29,30 @@ namespace Ocugine_SDK.Models
     }
 
     //===================================================
+    //  Ocugine Users List Model
+    //===================================================
+    public class UsersListInfo : BaseModel
+    {
+        public SubModel data;
+        public class SubModel
+        {
+            // Модель инфо
+            public ListModel[] list;
+            public class ListModel
+            {
+                public string uid = "";
+                public string first_name = "";
+                public string last_name = "";
+                public string avatar = "";
+                public string email = "";
+                public bool profile_data = false;
+                public string profile_type = "";
+            }
+
+        }
+    }
+
+    //===================================================
     //  Ocugine Policy List Model
     //===================================================
     public class PolicyListInfo : BaseModel

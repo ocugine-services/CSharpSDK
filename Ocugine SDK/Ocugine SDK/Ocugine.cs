@@ -213,6 +213,69 @@ namespace Ocugine_SDK
 
         //============================================================
         //  @class      Auth
+        //  @method     GetLink()
+        //  @type       Static Async Void
+        //  @usage      Get oauth link
+        //  @args       (string[] / string) grants - Grants for project
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     (bool) status
+        //============================================================
+        public delegate void OnGetLinkComplete(string data);
+        public delegate void OnGetLinkError(string code);
+        // With an array
+        public async void GetLink(OnGetLinkComplete complete, OnGetLinkError error, string[] grants)
+        {
+            await GetLinkAsync(complete, error, grants);
+        }
+        public async Task<bool> GetLinkAsync(OnGetLinkComplete complete, OnGetLinkError error, string[] grants)
+        {
+            string stringgrants = "";
+            if (grants.Contains("all"))
+                stringgrants = "all";
+            else
+                foreach (string s in grants) stringgrants += $"{s},";
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
+                new KeyValuePair<string, string>("grants", $"{stringgrants}".TrimEnd(',')), // Permissions
+                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language C:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\Models\BackendModel.cs
+            });
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
+                ((string data) => { // Response
+                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object  
+                    complete(state.data.auth_url);
+                }),
+                ((string code) => { // Error
+                    error(code);
+                }));
+        }
+        // With a string
+        public async void GetLink(OnGetLinkComplete complete, OnGetLinkError error, string grants = "")
+        {
+            await GetLinkAsync(complete, error, grants);
+        }
+        public async Task<bool> GetLinkAsync(OnGetLinkComplete complete, OnGetLinkError error, string grants = "")
+        {
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
+                new KeyValuePair<string, string>("grants", $"{(grants.ToLower().Contains("all")?"all":grants.Replace(' ',',').Replace('-',',').TrimEnd(','))}"), // Permissions
+                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
+            });
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
+                ((string data) => { // Response
+                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object  
+                    complete(state.data.auth_url);
+                }),
+                ((string code) => { // Error
+                    error(code);
+                }));
+        }
+
+
+        //============================================================
+        //  @class      Auth
         //  @method     GetToken()
         //  @type       Static Void
         //  @usage      Get user token
@@ -287,69 +350,7 @@ namespace Ocugine_SDK
                 error(code);
             }));
         }
-
-        //============================================================
-        //  @class      Auth
-        //  @method     GetLink()
-        //  @type       Static Async Void
-        //  @usage      Get oauth link
-        //  @args       (string[] / string) grants - Grants for project
-        //              (void) complete - Complete Callback
-        //              (void) error - Error Callback
-        //  @return     (bool) status
-        //============================================================
-        public delegate void OnGetLinkComplete(string data);
-        public delegate void OnGetLinkError(string code);
-        // With an array
-        public async void GetLink(OnGetLinkComplete complete, OnGetLinkError error, string[] grants)
-        {
-            await GetLinkAsync(complete, error, grants);
-        }
-        public async Task<bool> GetLinkAsync(OnGetLinkComplete complete, OnGetLinkError error, string[] grants)
-        {
-            string stringgrants = "";
-            if (grants.Contains("all"))
-                stringgrants = "all";
-            else
-                foreach (string s in grants) stringgrants += $"{s},";
-            var formContent = new FormUrlEncodedContent(new[]{
-                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
-                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
-                new KeyValuePair<string, string>("grants", $"{stringgrants}".TrimEnd(',')), // Permissions
-                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // LanguageC:\Users\vdape\Source\Repos\ocugine-services\CSharpSDK\Ocugine SDK\Ocugine SDK\Models\BackendModel.cs
-            });
-            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
-                ((string data) => { // Response
-                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object  
-                    complete(state.data.auth_url);
-                }),
-                ((string code) => { // Error
-                    error(code);
-                }));
-        }
-        // With a string
-        public async void GetLink(OnGetLinkComplete complete, OnGetLinkError error, string grants = "")
-        {
-            await GetLinkAsync(complete, error, grants);
-        }
-        public async Task<bool> GetLinkAsync(OnGetLinkComplete complete, OnGetLinkError error, string grants = "")
-        {
-            var formContent = new FormUrlEncodedContent(new[]{
-                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
-                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App Key
-                new KeyValuePair<string, string>("grants", $"{(grants.ToLower().Contains("all")?"all":grants.Replace(' ',',').Replace('-',',').TrimEnd(','))}"), // Permissions
-                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}") // Language
-            });
-            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_link", formContent,
-                ((string data) => { // Response
-                    OAuthModel state = JsonConvert.DeserializeObject<OAuthModel>(data); // Deserialize Object  
-                    complete(state.data.auth_url);
-                }),
-                ((string code) => { // Error
-                    error(code);
-                }));
-        }
-        
+       
     }
 
     //===================================================
@@ -769,8 +770,43 @@ namespace Ocugine_SDK
         //  @class      Users
         //  @method     GetPolicyList()
         //  @type       Static Void
-        //  @usage      Get policy list
+        //  @usage      Get users list
+        //  @args       (int) page - Page number    
         //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public delegate void OnGetUsersListSuccess(UsersListInfo data); // Returns OAuthTokenModel
+        public delegate void OnGetUsersListError(string code); // Returns error code
+        public async void GetUsersList(int page, OnGetUsersListSuccess complete, OnGetUsersListError error)
+        {
+            await GetUsersListAsync(page, complete, error);
+        }
+        public async Task<bool> GetUsersListAsync(int page, OnGetUsersListSuccess complete, OnGetUsersListError error)
+        {
+            var authContent = new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                        new KeyValuePair<string, string>("page", $"{page}"),       // Language
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
+                    };
+            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_users_list", formContent,
+                ((string data) => { // Response
+                    UsersListInfo state = JsonConvert.DeserializeObject<UsersListInfo>(data); // Deserialize Object
+                    complete(state); // Return Data                       
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
+        }
+
+        //============================================================
+        //  @class      Users
+        //  @method     GetPolicyList()
+        //  @type       Static Void
+        //  @usage      Get policy list
+        //  @args       (void) complete - Complete Callback
         //              (void) error - Error Callback
         //  @return     none
         //============================================================
@@ -803,7 +839,7 @@ namespace Ocugine_SDK
         //  @method     GetPolicyInfo()
         //  @type       Static Void
         //  @usage      Get policy info
-        //              (double) pid - Id of policy
+        //  @args       (double) pid - Id of policy
         //              (void) complete - Complete Callback
         //              (void) error - Error Callback
         //  @return     none

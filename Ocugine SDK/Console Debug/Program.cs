@@ -27,7 +27,7 @@ namespace Console_Debug
             }, new SDKSettings
             {
                 language = "RU",
-                modules = new SDKModules[] { SDKModules.Auth, SDKModules.UI, SDKModules.Backend },
+                modules = new SDKModules[] { SDKModules.All },
                 auth_timeout = 10
             });
 
@@ -42,9 +42,10 @@ namespace Console_Debug
             //SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест логаута **/
-            //SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine(SDK.auth.credentials.token); }, (string s) => { Console.WriteLine(s); });
-            //Thread.Sleep(2000);
-            //SDK.auth.Logout((string o) => { Console.WriteLine("Успешный логаут"); }, (string s) => { Console.WriteLine(s); });
+            //SDK.auth.GetToken((OAuthTokenModel o) => { 
+            //    Console.WriteLine(SDK.auth.credentials.token);
+            //    SDK.auth.Logout((string ls) => { Console.WriteLine("Успешный логаут"); }, (string lf) => { Console.WriteLine(lf); });
+            //}, (string s) => { Console.WriteLine(s); });           
 
             /** Тест получения информации о языке **/
             //SDK.locale.GetLang("ru", (LanguageInfo o) => { Console.WriteLine($"{o.data.name}"); }, (string s) => { Console.WriteLine(s); });
@@ -71,8 +72,9 @@ namespace Console_Debug
             /** Тест загрузки контента **/
             //SDK.ui.DownloadContent(1, @"C:\IBS\", (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); });
 
-
             /** Тест  **/
+            //SDK.users.GetUsersList(1, (UsersListInfo o) => { foreach (UsersListInfo.SubModel.ListModel d in o.data.list) Console.WriteLine($"[{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
+
             /** Тест  **/
             /** Тест  **/
             /** Тест  **/
