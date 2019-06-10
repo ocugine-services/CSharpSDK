@@ -46,6 +46,14 @@ namespace Ocugine_SDK.Models
     }
 
     //===================================================
+    //  Ocugine Language List Model
+    //===================================================
+    public class LanguageListInfo : BaseModel
+    {
+        public List<LanguageInfo.SubModel> data;
+    }
+
+    //===================================================
     //  Ocugine Locale Info Model
     //===================================================
     public class LocaleInfo : BaseModel
@@ -61,4 +69,13 @@ namespace Ocugine_SDK.Models
             public string project_id = "";     // Project id
         }
     }
+
+    //===================================================
+    //  Ocugine Locale List Model
+    //===================================================
+    public class LocaleListInfo : BaseModel
+    {
+        public Dictionary<string, LocaleInfo.SubModel[]> data;
+    }
+
 }

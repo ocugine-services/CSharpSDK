@@ -56,10 +56,10 @@ namespace Ocugine_SDK
         public Ads ads;                                 // Ads Services
         public Backend backend;                         // Backend Services
         public Reporting reports;                       // Reporting Services
-        public Performance performance;                   // Performance Services
+        public Performance performance;                 // Performance Services
         public Backoffice office;                       // Office Services
         public Localization locale;                     // Locale Services
-        public Users users;                               // User Class
+        public Users users;                             // User Class
         public UI ui;                                   // UI Module
         public Utils utils;                             // SDK Utils
 
@@ -90,9 +90,11 @@ namespace Ocugine_SDK
             if (sdk_settings != null){ // Has SDK Settings
                 settings = sdk_settings; // Set SDK Settings
             } else { // No SDK Settings
-                settings = new SDKSettings(); // Create SDK Settings
-                settings.language = "EN"; // Set Default Language as EN
-                settings.auth_timeout = 10; // Set Default SDK Settings
+                settings = new SDKSettings
+                {
+                    language = "EN", // Set Default Language as EN
+                    auth_timeout = 10 // Set Default SDK Settings
+                }; // Create SDK Settings
             }
 
             // Initialize Modules
@@ -359,7 +361,7 @@ namespace Ocugine_SDK
     public class Analytics{
 
         // Private Class Params
-        private Ocugine sdk_instance;            // SDK Instance
+        private readonly Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Analytics
@@ -380,7 +382,7 @@ namespace Ocugine_SDK
     public class GameServices{
 
         // Private Class Params
-        private Ocugine sdk_instance;            // SDK Instance
+        private readonly Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      GameServices
@@ -401,7 +403,7 @@ namespace Ocugine_SDK
     public class Payments{
 
         // Private Class Params
-        private Ocugine sdk_instance;            // SDK Instance
+        private readonly Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Payments
@@ -422,7 +424,7 @@ namespace Ocugine_SDK
     public class Notifications{
 
         // Private Class Params
-        private Ocugine sdk_instance;            // SDK Instance
+        private readonly Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Notifications
@@ -443,7 +445,7 @@ namespace Ocugine_SDK
     public class Marketing{
 
         // Private Class Params
-        private Ocugine sdk_instance;            // SDK Instance
+        private readonly Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Marketing
@@ -464,7 +466,7 @@ namespace Ocugine_SDK
     public class Ads{
 
         // Private Class Params
-        private Ocugine sdk_instance;            // SDK Instance
+        private readonly Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Ads
@@ -575,7 +577,7 @@ namespace Ocugine_SDK
     public class Reporting{
 
         // Private Class Params
-        private Ocugine sdk_instance;            // SDK Instance
+        private readonly Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Reporting
@@ -596,7 +598,7 @@ namespace Ocugine_SDK
     public class Performance{
 
         // Private Class Params
-        private Ocugine sdk_instance;            // SDK Instance
+        private readonly Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Performance
@@ -617,7 +619,7 @@ namespace Ocugine_SDK
     public class Backoffice{
 
         // Private Class Params
-        private Ocugine sdk_instance;            // SDK Instance
+        private readonly Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Backoffice
@@ -639,8 +641,10 @@ namespace Ocugine_SDK
         
         // Private Class Params
         private Ocugine sdk_instance; // SDK Instance
-        private Dictionary<string, LanguageInfo> LangInfoCache = new Dictionary<string, LanguageInfo>(); // Localization cache
+        private Dictionary<string, LanguageInfo> LangInfoCache = new Dictionary<string, LanguageInfo>(); // Languahe cache
+        private List<LanguageInfo.SubModel> LangListCache = new List<LanguageInfo.SubModel>(); // Languahe list cache
         private Dictionary<string, Dictionary<string, LocaleInfo>> LocInfoCache = new Dictionary<string, Dictionary<string, LocaleInfo>>(); // Localization cache
+        private Dictionary<string, LocaleInfo.SubModel[]> LocListCache = new Dictionary<string, LocaleInfo.SubModel[]>(); // Localization list cache
 
         //============================================================
         //  @class      Localization
@@ -687,8 +691,9 @@ namespace Ocugine_SDK
                 return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_lang", formContent,
                     ((string data) => { // Response
                         LanguageInfo state = JsonConvert.DeserializeObject<LanguageInfo>(data); // Deserialize Object    
-                        LangInfoCache[lang_code] = state;
+                        LangInfoCache[lang_code] = state;                               
                         complete(state);
+                        LangInfoCache[lang_code].message = "Cache"; // Make mark, that it is cache
                     }),
                 ((string code) => { // Error
                 error(code);
@@ -698,7 +703,47 @@ namespace Ocugine_SDK
 
         //============================================================
         //  @class      Localization
-        //  @method     GetLang()
+        //  @method     GetLangList()
+        //  @type       Static Async Void
+        //  @usage      Get lang list
+        //  @args       (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================   
+        public delegate void OnGetLangListComplete(LanguageListInfo data);
+        public delegate void OnGetLangListError(string code);
+        public async void GetLangList(OnGetLangListComplete complete, OnGetLangListError error) // Get locale
+        {
+            await GetLangListAsync(complete, error);
+        }
+        public async Task<bool> GetLangListAsync(OnGetLangListComplete complete, OnGetLangListError error) // (bool) Get locale
+        {
+            if (LangListCache.Count != 0) // If has lang and locale in thot lang
+            {
+                complete(new LanguageListInfo() { message = "Cache", data = LangListCache });
+                return true;
+            }
+            else
+            {
+                var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}") // App key
+            });
+                return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_lang_list", formContent,
+                    ((string data) => { // Response
+                        LanguageListInfo state = JsonConvert.DeserializeObject<LanguageListInfo>(data); // Deserialize Object   
+                        LangListCache = state.data;
+                        complete(state);
+                    }),
+                ((string code) => { // Error
+                    error(code);
+                }));
+            }
+        }
+
+        //============================================================
+        //  @class      Localization
+        //  @method     GetLocale()
         //  @type       Static Async Void
         //  @usage      Get locale info
         //  @args       (void) complete - Complete Callback
@@ -734,14 +779,56 @@ namespace Ocugine_SDK
                         if (LocInfoCache.ContainsKey(lang_code))
                             LocInfoCache[lang_code][locale_code] = state;
                         else
-                            LocInfoCache[lang_code] = new Dictionary<string, LocaleInfo> { { locale_code, state } };
+                            LocInfoCache[lang_code] = new Dictionary<string, LocaleInfo> { { locale_code, state } };                     
                         complete(state);
+                        LocInfoCache[lang_code][locale_code].message = "Cache"; // Make mark, that it is cache
                     }),
                 ((string code) => { // Error
                 error(code);
                 }));
             }           
         }
+
+        //============================================================
+        //  @class      Localization
+        //  @method     GetLocaleList()
+        //  @type       Static Async Void
+        //  @usage      Get locale list
+        //  @args       (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================   
+        public delegate void OnGetLocaleListComplete(LocaleListInfo data);
+        public delegate void OnGetLocaleListError(string code);
+        public async void GetLocaleList(OnGetLocaleListComplete complete, OnGetLocaleListError error) // Get locale
+        {
+            await GetLocaleListAsync(complete, error);
+        }
+        public async Task<bool> GetLocaleListAsync(OnGetLocaleListComplete complete, OnGetLocaleListError error) // (bool) Get locale
+        {
+            if (LocListCache.Count != 0) // If has lang and locale in thot lang
+            {
+                complete(new LocaleListInfo() { message = "Cache", data = LocListCache });
+                return true;
+            }
+            else
+            {
+                var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}") // App key
+            });
+                return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_locale_list", formContent,
+                    ((string data) => { // Response
+                        LocaleListInfo state = JsonConvert.DeserializeObject<LocaleListInfo>(data); // Deserialize Object   
+                        LocListCache = state.data;                       
+                        complete(state);
+                    }),
+                ((string code) => { // Error
+                    error(code);
+                }));
+            }
+        }
+
     }
 
     //===================================================
@@ -835,6 +922,7 @@ namespace Ocugine_SDK
                 error(code);
             }));
         }
+
         //============================================================
         //  @class      Users
         //  @method     GetUserData()
@@ -1190,6 +1278,7 @@ namespace Ocugine_SDK
                 var myHttpClient = new HttpClient(); // Create HTTP Client
                 var response = await myHttpClient.PostAsync(url, data); // HTTP Response
                 var json = await response.Content.ReadAsStringAsync(); // JSON Data
+                // Console.WriteLine(json); // Отладка
                 try{ // Trying to decode HTTP Response
                     BaseModel resp = JsonConvert.DeserializeObject<BaseModel>(json); // Deserialize JSON to Object
                     if (resp.complete){ // All Right, Server returns Complete Flag

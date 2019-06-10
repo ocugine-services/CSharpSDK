@@ -48,13 +48,13 @@ namespace Console_Debug
             //}, (string s) => { Console.WriteLine(s); });           
 
             /** Тест получения информации о языке и о локали **/
-            //SDK.locale.GetLang("ru", (LanguageInfo o) => { Console.WriteLine($"{o.data.name}"); }, (string s) => { Console.WriteLine(s); });
+            //SDK.locale.GetLang("ru", (LanguageInfo o) => { Console.WriteLine($"{o.data.name}"); Console.WriteLine($"{o.message}"); }, (string s) => { Console.WriteLine(s); });
             //SDK.locale.GetLocale("ru", "test-node", (LocaleInfo o) => { Console.WriteLine($"{o.data.value}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест получения списка политик и инфо о политике **/
             //SDK.users.GetPolicyList((PolicyListInfo o) => { foreach(PolicyListInfo.SubModel.ListModel d in o.data.list) Console.WriteLine($"[{d.uid}] - {d.policy_name}"); }, (string s) => { Console.WriteLine(s); });
             //SDK.users.GetPolicyInfo(1, (PolicyInfo o) => { Console.WriteLine($"{o.data.info.policy_name} {o.data.info.policy_text}"); }, (string s) => { Console.WriteLine(s); });
-            
+
             /** Тест получения настроек **/
             //SDK.utils.GetSettings((APISettingsInfo o) => { Console.WriteLine($"{o.data.configs.uid} {o.data.configs.limitation}"); }, (string s) => { Console.WriteLine(s); });
 
@@ -66,16 +66,18 @@ namespace Console_Debug
             //SDK.ui.DownloadContent(1, @"C:\IBS\", (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест получения списка пользователей, текущего пользователя, пользователя по ID, выборки  **/
-            SDK.users.GetUsersList(1, (UsersListInfo o) => { Console.WriteLine("[U] Get User List:"); foreach (UserInfo.SubModel.BaseData d in o.data.list) Console.WriteLine($"[U] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
-            SDK.auth.GetToken((OAuthTokenModel o) =>
-            {
-                SDK.users.GetUserData((UserInfo lo) => { Console.WriteLine($"Get Current Mail: {lo.data.base_data.email}"); }, (string ls) => { Console.WriteLine(ls); });
-            }, (string s) => { Console.WriteLine(s); });
-            SDK.users.GetUserByID(17, (UserInfo lo) => { Console.WriteLine($"Get by ID Mail: {lo.data.base_data.email}"); }, (string ls) => { Console.WriteLine(ls); });
-            SDK.users.FindUser("Ocugine", 1, (UsersListInfo o) => { Console.WriteLine("[S] Search user:"); foreach (UserInfo.SubModel.BaseData d in o.data.list) Console.WriteLine($"[S] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
+            //SDK.users.GetUsersList(1, (UsersListInfo o) => { Console.WriteLine("[U] Get User List:"); foreach (UserInfo.SubModel.BaseData d in o.data.list) Console.WriteLine($"[U] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
+            //SDK.auth.GetToken((OAuthTokenModel o) =>
+            //{
+            //    SDK.users.GetUserData((UserInfo lo) => { Console.WriteLine($"Get Current Mail: {lo.data.base_data.email}"); }, (string ls) => { Console.WriteLine(ls); });
+            //}, (string s) => { Console.WriteLine(s); });
+            //SDK.users.GetUserByID(17, (UserInfo lo) => { Console.WriteLine($"Get by ID Mail: {lo.data.base_data.email}"); }, (string ls) => { Console.WriteLine(ls); });
+            //SDK.users.FindUser("Ocugine", 1, (UsersListInfo o) => { Console.WriteLine("[S] Search user:"); foreach (UserInfo.SubModel.BaseData d in o.data.list) Console.WriteLine($"[S] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
 
-            /** Тест  **/
-
+            /** Тест получения списка локалей и языков **/
+            //SDK.locale.GetLocaleList((LocaleListInfo o) => {Console.WriteLine($"{o.data["testik"][0].value}");}, (string s) => { Console.WriteLine(s); });
+            //SDK.locale.GetLangList((LanguageListInfo o) => { Console.WriteLine($"{o.data[0].name}"); }, (string s) => { Console.WriteLine(s); });
+            
             /** Тест  **/
 
             //DynamicCodeBuilder.Create();
