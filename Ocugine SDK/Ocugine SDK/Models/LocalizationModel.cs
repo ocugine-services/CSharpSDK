@@ -25,7 +25,7 @@ namespace Ocugine_SDK.Models
 {
     public class LocalizationModel
     {
-        
+
     }
 
     //===================================================

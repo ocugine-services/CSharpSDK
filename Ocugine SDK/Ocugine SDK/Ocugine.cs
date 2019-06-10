@@ -293,12 +293,11 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetTokenAsync(OnAPIInfoComplete complete, OnAPIInfoError error)
         {
-            var authContent = new[]{
+            var formContent = new FormUrlEncodedContent(new[]{
                         new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
                         new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
                         new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
-                    };
-            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+                    });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/get_token", formContent,
                 ((string data) => { // Response
                     OAuthTokenModel state = JsonConvert.DeserializeObject<OAuthTokenModel>(data); // Deserialize Object
@@ -337,11 +336,10 @@ namespace Ocugine_SDK
                     default: { error("Logout error, application not authorized"); } break;
                 }
                 return false;
-            }              
-            var logoutContent = new[]{
+            }
+            var formContent = new FormUrlEncodedContent(new[]{
                         new KeyValuePair<string, string>("access_token", $"{sdk_instance.auth.credentials.token}"),   // App Token
-                    };
-            var formContent = new FormUrlEncodedContent(logoutContent); // Serealize request params
+                    });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.OAUTH_OBJECT + "/logout", formContent,
                 ((string data) => { // Response       
                     sdk_instance.auth.credentials.token = "";
@@ -684,10 +682,10 @@ namespace Ocugine_SDK
             else // If not cached
             {
                 var formContent = new FormUrlEncodedContent(new[]{
-                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
-                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
-                new KeyValuePair<string, string>("code", $"{lang_code}"), // Code language
-            });
+                    new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"), // App Id
+                    new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                    new KeyValuePair<string, string>("code", $"{lang_code}"), // Code language
+                });
                 return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.LOCALE_OBJECT + "/get_lang", formContent,
                     ((string data) => { // Response
                         LanguageInfo state = JsonConvert.DeserializeObject<LanguageInfo>(data); // Deserialize Object    
@@ -871,13 +869,12 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetUsersListAsync(int page, OnGetUsersListSuccess complete, OnGetUsersListError error)
         {
-            var authContent = new[]{
+            var formContent = new FormUrlEncodedContent(new[]{
                         new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
                         new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
                         new KeyValuePair<string, string>("page", $"{page}"),       // Language
                         new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
-                    };
-            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+                    });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_users_list", formContent,
                 ((string data) => { // Response
                     UsersListInfo state = JsonConvert.DeserializeObject<UsersListInfo>(data); // Deserialize Object
@@ -905,14 +902,13 @@ namespace Ocugine_SDK
         }
         public async Task<bool> FindUserAsync(string search, int page, OnGetUsersListSuccess complete, OnGetUsersListError error)
         {
-            var authContent = new[]{
+            var formContent = new FormUrlEncodedContent(new[]{
                         new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
                         new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key                       
                         new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}"),       // Language
                         new KeyValuePair<string, string>("search", $"{search}"),       // Search request
                         new KeyValuePair<string, string>("page", $"{page}")       // Search page
-                    };
-            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+                    });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/find_user", formContent,
                 ((string data) => { // Response
                     UsersListInfo state = JsonConvert.DeserializeObject<UsersListInfo>(data); // Deserialize Object
@@ -940,13 +936,12 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetUserDataAsync(OnGetUserDataSuccess complete, OnGetUserDataError error)
         {
-            var authContent = new[]{
-                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
-                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
-                        new KeyValuePair<string, string>("access_token", $"{sdk_instance.auth.credentials.token}"),       // Language
-                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
-                    };
-            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+            var formContent = new FormUrlEncodedContent(new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),               // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"),             // App key
+                        new KeyValuePair<string, string>("access_token", $"{sdk_instance.auth.credentials.token}"),     // Token
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")                   // Language
+                    });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_user_data", formContent,
                 ((string data) => { // Response
                     UserInfo state = JsonConvert.DeserializeObject<UserInfo>(data); // Deserialize Object
@@ -973,13 +968,12 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetUserByIDAsync(double uid, OnGetUserDataSuccess complete, OnGetUserDataError error)
         {
-            var authContent = new[]{
-                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
-                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
-                        new KeyValuePair<string, string>("profile_uid", $"{uid}"),       // Language
-                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
-                    };
-            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+            var formContent = new FormUrlEncodedContent(new[]{
+                new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
+                new KeyValuePair<string, string>("profile_uid", $"{uid}"),                          // UID
+                new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
+            });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_user_by_id", formContent,
                 ((string data) => { // Response
                     UserInfo state = JsonConvert.DeserializeObject<UserInfo>(data); // Deserialize Object
@@ -1007,12 +1001,11 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetPolicyListAsync(OnGetPolicyListSuccess complete, OnGetPolicyListError error)
         {
-            var authContent = new[]{
+            var formContent = new FormUrlEncodedContent(new[]{
                         new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
                         new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
                         new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
-                    };
-            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+                    });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_policy_list", formContent,
                 ((string data) => { // Response
                     PolicyListInfo state = JsonConvert.DeserializeObject<PolicyListInfo>(data); // Deserialize Object
@@ -1041,13 +1034,12 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetPolicyInfoAsync(double pid, OnGetPolicyInfoSuccess complete, OnGetPolicyInfoError error)
         {
-            var authContent = new[]{
+            var formContent = new FormUrlEncodedContent(new[]{
                         new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
                         new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
-                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}"),       // Language
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}"),      // Language
                         new KeyValuePair<string, string>("pid", $"{pid}")       // Policy id
-                    };
-            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+                    });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_policy_info", formContent,
                 ((string data) => { // Response
                     PolicyInfo state = JsonConvert.DeserializeObject<PolicyInfo>(data); // Deserialize Object
@@ -1057,6 +1049,106 @@ namespace Ocugine_SDK
                 error(code);
             }));
         }
+
+        //============================================================
+        //  @class      Users
+        //  @method     GetGroupList()
+        //  @type       Static Void
+        //  @usage      Get user group list
+        //  @args       (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public delegate void OnGetGroupListSuccess(GroupListInfo data); // Returns OAuthTokenModel
+        public delegate void OnGetGroupListError(string code); // Returns error code
+        public async void GetGroupList(OnGetGroupListSuccess complete, OnGetGroupListError error)
+        {
+            await GetGroupListAsync(complete, error);
+        }
+        public async Task<bool> GetGroupListAsync(OnGetGroupListSuccess complete, OnGetGroupListError error)
+        {
+            var formContent = new FormUrlEncodedContent(new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key     
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
+                    });
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_group_list", formContent,
+                ((string data) => { // Response
+                    GroupListInfo state = JsonConvert.DeserializeObject<GroupListInfo>(data); // Deserialize Object
+                    complete(state); // Return Data                       
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
+        }
+
+        //============================================================
+        //  @class      Users
+        //  @method     GetGroupData()
+        //  @type       Static Void
+        //  @usage      Get user group data
+        //  @args       (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public delegate void OnGetGroupDataSuccess(GroupInfo data); // Returns OAuthTokenModel
+        public delegate void OnGetGroupDataError(string code); // Returns error code
+        public async void GetGroupData(double group_id, OnGetGroupDataSuccess complete, OnGetGroupDataError error)
+        {
+            await GetGroupDataAsync(group_id, complete, error);
+        }
+        public async Task<bool> GetGroupDataAsync(double group_id, OnGetGroupDataSuccess complete, OnGetGroupDataError error)
+        {
+            var formContent = new FormUrlEncodedContent(new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key     
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}"),       // Language
+                        new KeyValuePair<string, string>("group_id", $"{group_id}")       // GID
+                    });
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_group_data", formContent,
+                ((string data) => { // Response
+                    GroupInfo state = JsonConvert.DeserializeObject<GroupInfo>(data); // Deserialize Object
+                    complete(state); // Return Data                       
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
+        }
+
+        //============================================================
+        //  @class      Users
+        //  @method     SetGroup()
+        //  @type       Static Void
+        //  @usage      Set user group
+        //  @args       ПАРАМЕТРЫ
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback
+        //  @return     none
+        //============================================================
+        public delegate void OnSetGroupSuccess(string data); // Returns OAuthTokenModel
+        public delegate void OnSetGroupError(string code); // Returns error code
+        public async void SetGroup(OnSetGroupSuccess complete, OnSetGroupError error)
+        {
+            await SetGroupAsync(complete, error);
+        }
+        public async Task<bool> SetGroupAsync(OnSetGroupSuccess complete, OnSetGroupError error)
+        {            
+            var formContent = new FormUrlEncodedContent(new[]{
+                        new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
+                        new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key     
+                        new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
+                    });
+            return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/set_group", formContent,
+                ((string data) => { // Response
+                    throw new NotImplementedException();
+                    UserInfo state = JsonConvert.DeserializeObject<UserInfo>(data); // Deserialize Object
+                    complete(state.message); // Return Data                       
+                }),
+            ((string code) => { // Error
+                error(code);
+            }));
+        }
+
     }
 
     //===================================================
@@ -1343,12 +1435,11 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetSettingsAsync(OnGetSettingsSuccess complete, OnGetSettingsError error)
         {
-            var authContent = new[]{
+            var formContent = new FormUrlEncodedContent(new[]{
                         new KeyValuePair<string, string>("app_id", $"{sdk_instance.application.app_id}"),   // App Id
                         new KeyValuePair<string, string>("app_key", $"{sdk_instance.application.app_key}"), // App key
                         new KeyValuePair<string, string>("lang", $"{sdk_instance.settings.language}")       // Language
-                    };
-            var formContent = new FormUrlEncodedContent(authContent); // Serealize request params
+                    });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.SETTINGS_OBJECT + "/get_settings", formContent,
                 ((string data) => { // Response
                     APISettingsInfo state = JsonConvert.DeserializeObject<APISettingsInfo>(data); // Deserialize Object

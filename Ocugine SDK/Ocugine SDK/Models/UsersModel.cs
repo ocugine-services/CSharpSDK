@@ -51,6 +51,8 @@ namespace Ocugine_SDK.Models
         public class SubModel
         {
             public BaseData base_data;
+
+            #warning StillNotImplemented
             public AdvancedData advanced_data;
             public GroupData group_data;
 
@@ -72,7 +74,7 @@ namespace Ocugine_SDK.Models
 
             public class GroupData
             {
-
+                
             }
         }
     }
@@ -116,6 +118,39 @@ namespace Ocugine_SDK.Models
                 public string time = "";
             }
             
+        }
+    }
+
+    //===================================================
+    //  Ocugine Groups List Model
+    //===================================================
+    public class GroupListInfo : BaseModel
+    {
+        public SubModel data;
+
+        public class SubModel
+        {
+            public GroupInfo.SubModel[] list;
+        }
+    }
+
+    //===================================================
+    //  Ocugine Groups Info Model
+    //===================================================
+    public class GroupInfo : BaseModel
+    {
+        public SubModel data;
+        public class SubModel
+        {
+            public string uid = "";
+            public string project_id = "";
+            public string group_name = "";
+            public string group_desc = "";
+            public string time = "";
+            public bool conditions = false;
+            public string can_select = "";
+            public string auto_detect = "";
+
         }
     }
 
