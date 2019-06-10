@@ -22,6 +22,7 @@ namespace Console_Debug
             // Initialize Ocugine SDK
             Ocugine SDK = new Ocugine(new AppSettings
             {
+                app_path = "C:/ICS",
                 app_id = 1,
                 app_key = "c46361ae80c1679d637c2f23968a4dc5d5ea2a65"
             }, new SDKSettings
@@ -63,7 +64,7 @@ namespace Console_Debug
             //SDK.backend.GetContent(1, (ContentInfo o) => { Console.WriteLine($"{o.data.info.content_size} {o.data.info.content_slug} {o.data.info.content_url}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест загрузки контента **/
-            //SDK.ui.DownloadContent(1, @"C:\IBS\", (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); });
+            SDK.ui.DownloadContent(1, (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); }); // , @"C:\IBS\"
 
             /** Тест получения списка пользователей, текущего пользователя, пользователя по ID, выборки  **/
             //SDK.users.GetUsersList(1, (UsersListInfo o) => { Console.WriteLine("[U] Get User List:"); foreach (UserInfo.SubModel.BaseData d in o.data.list) Console.WriteLine($"[U] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
@@ -80,120 +81,125 @@ namespace Console_Debug
 
             /** Тест установки группы, получения списка групп и конкретной группы **/
             //SDK.users.SetGroup((string s) => Console.WriteLine(s), (string e) => Console.WriteLine(e));
-            SDK.users.GetGroupList((GroupListInfo s) => { foreach (GroupInfo.SubModel M in s.data.list) Console.WriteLine($"[{M.uid}] {M.group_name}"); }, (string e) => Console.WriteLine(e));
-            SDK.users.GetGroupData(1, (GroupInfo s) => { Console.WriteLine($"{s.data.group_desc}"); }, (string e) => Console.WriteLine(e));
+            //SDK.users.GetGroupList((GroupListInfo s) => { foreach (GroupInfo.SubModel M in s.data.list) Console.WriteLine($"[{M.uid}] {M.group_name}"); }, (string e) => Console.WriteLine(e));
+            //SDK.users.GetGroupData(1, (GroupInfo s) => { Console.WriteLine($"{s.data.group_desc}"); }, (string e) => Console.WriteLine(e));
 
 
-            //DynamicCodeBuilder.Create();
+            //
             Console.Read();
         }
 
 
     }
 
- 
-    //public class DynamicCodeBuilder
-    //{
-    //    static List<string> AvailableTypes = new List<string> { "string", "int", "float", "double", "char" };
+    /*
+     * 
+     * DynamicCodeBuilder.Create();
+     * 
+     * 
+    public class DynamicCodeBuilder
+    {
+        static List<string> AvailableTypes = new List<string> { "string", "int", "float", "double", "char" };
 
-    //    private static Type GetElementType(string inputString)
-    //    {
-    //        return Type.GetType("system." + inputString, false, true);
-    //    }
+        private static Type GetElementType(string inputString)
+        {
+            return Type.GetType("system." + inputString, false, true);
+        }
 
-    //    static IDictionary<string, string> ParseStr(string inputString)
-    //    {
-    //        IDictionary<string, string> dynamicPair = new Dictionary<string, string>();
+        static IDictionary<string, string> ParseStr(string inputString)
+        {
+            IDictionary<string, string> dynamicPair = new Dictionary<string, string>();
 
-    //        foreach (string type in AvailableTypes)
-    //        {
-    //            if (inputString.Contains(type))
-    //            {
-    //                string tmpString = inputString.Substring(inputString.IndexOf(type, 0) + type.Length + 1);
+            foreach (string type in AvailableTypes)
+            {
+                if (inputString.Contains(type))
+                {
+                    string tmpString = inputString.Substring(inputString.IndexOf(type, 0) + type.Length + 1);
 
-    //                tmpString = tmpString.Substring(0, tmpString.Length - 1);
-    //                dynamicPair.Add(type, tmpString);
+                    tmpString = tmpString.Substring(0, tmpString.Length - 1);
+                    dynamicPair.Add(type, tmpString);
 
-    //                return dynamicPair;
-    //            }
-    //        }
+                    return dynamicPair;
+                }
+            }
 
-    //        return dynamicPair;
-    //    }
+            return dynamicPair;
+        }
 
-    //    private static Type CreateDynamicClassType(AppDomain currentDomain, string inputString)
-    //    {
-    //        IDictionary<string, string> parsedValueString = ParseStr(inputString);
-    //        string typeName = "";
-    //        string typeVariable = "";
+        private static Type CreateDynamicClassType(AppDomain currentDomain, string inputString)
+        {
+            IDictionary<string, string> parsedValueString = ParseStr(inputString);
+            string typeName = "";
+            string typeVariable = "";
 
-    //        foreach (KeyValuePair<string, string> kvp in parsedValueString)
-    //        {
-    //            typeName = kvp.Key;
-    //            typeVariable = kvp.Value;
-    //        }
+            foreach (KeyValuePair<string, string> kvp in parsedValueString)
+            {
+                typeName = kvp.Key;
+                typeVariable = kvp.Value;
+            }
 
-    //        Type type = GetElementType(typeName);
+            Type type = GetElementType(typeName);
 
-    //        // Create an assembly.
-    //        AssemblyName DynamicAssemblyName = new AssemblyName();
-    //        DynamicAssemblyName.Name = "DynamicVariablesAssembly";
-    //        AssemblyBuilder DynamicAssembly =
-    //                       currentDomain.DefineDynamicAssembly(DynamicAssemblyName, AssemblyBuilderAccess.Run);
+            // Create an assembly.
+            AssemblyName DynamicAssemblyName = new AssemblyName();
+            DynamicAssemblyName.Name = "DynamicVariablesAssembly";
+            AssemblyBuilder DynamicAssembly =
+                           currentDomain.DefineDynamicAssembly(DynamicAssemblyName, AssemblyBuilderAccess.Run);
 
-    //        // Create a dynamic module in Dynamic Assembly.
-    //        ModuleBuilder DynamicModuleBuilder = DynamicAssembly.DefineDynamicModule("DynamicVariablesModule");
+            // Create a dynamic module in Dynamic Assembly.
+            ModuleBuilder DynamicModuleBuilder = DynamicAssembly.DefineDynamicModule("DynamicVariablesModule");
 
-    //        // Define a public class named "DynamicVariablesClass" in the assembly.
-    //        TypeBuilder DynamicTypeBuilder = DynamicModuleBuilder.DefineType("DynamicVariablesClass", TypeAttributes.Public);
+            // Define a public class named "DynamicVariablesClass" in the assembly.
+            TypeBuilder DynamicTypeBuilder = DynamicModuleBuilder.DefineType("DynamicVariablesClass", TypeAttributes.Public);
 
-    //        // Define a public String field named with inputed parameter in the type and name.
-    //        FieldBuilder DynamicFieldBuilder = DynamicTypeBuilder.DefineField(typeVariable, type, FieldAttributes.Public);
+            // Define a public String field named with inputed parameter in the type and name.
+            FieldBuilder DynamicFieldBuilder = DynamicTypeBuilder.DefineField(typeVariable, type, FieldAttributes.Public);
 
-    //        return DynamicTypeBuilder.CreateType();
-    //    }
+            return DynamicTypeBuilder.CreateType();
+        }
 
-    //    [PermissionSetAttribute(SecurityAction.Demand, Name = "FullTrust")]
-    //    public static void Create()
-    //    {
-    //        try
-    //        {
-    //            Console.WriteLine("Input string (format: [type][random symbol][variable name][random separator]): ");
-    //            string inputString = Console.ReadLine();
+        [PermissionSetAttribute(SecurityAction.Demand, Name = "FullTrust")]
+        public static void Create()
+        {
+            try
+            {
+                Console.WriteLine("Input string (format: [type][random symbol][variable name][random separator]): ");
+                string inputString = Console.ReadLine();
 
-    //            Type dynamicVariablesType = CreateDynamicClassType(Thread.GetDomain(), inputString);
+                Type dynamicVariablesType = CreateDynamicClassType(Thread.GetDomain(), inputString);
 
-    //            Object dynamicVariablesObject = Activator.CreateInstance(dynamicVariablesType);
-    //            FieldInfo[] fi = dynamicVariablesType.GetFields();
+                Object dynamicVariablesObject = Activator.CreateInstance(dynamicVariablesType);
+                FieldInfo[] fi = dynamicVariablesType.GetFields();
 
-    //            Console.WriteLine("Fields without value:");
-    //            for (int i = 0; i < fi.Length; i++)
-    //            {
-    //                Console.WriteLine("Name            : {0}", fi[i].Name);
-    //                Console.WriteLine("Value           : {0}", fi[i].GetValue(dynamicVariablesObject));
-    //                Console.WriteLine("Declaring Type  : {0}", fi[i].DeclaringType);
-    //                Console.WriteLine("IsPublic        : {0}", fi[i].IsPublic);
-    //                Console.WriteLine("MemberType      : {0}", fi[i].MemberType);
-    //                Console.WriteLine("FieldType       : {0}", fi[i].FieldType);
-    //                fi[i].SetValue(dynamicVariablesObject, "test");
-    //            }
+                Console.WriteLine("Fields without value:");
+                for (int i = 0; i < fi.Length; i++)
+                {
+                    Console.WriteLine("Name            : {0}", fi[i].Name);
+                    Console.WriteLine("Value           : {0}", fi[i].GetValue(dynamicVariablesObject));
+                    Console.WriteLine("Declaring Type  : {0}", fi[i].DeclaringType);
+                    Console.WriteLine("IsPublic        : {0}", fi[i].IsPublic);
+                    Console.WriteLine("MemberType      : {0}", fi[i].MemberType);
+                    Console.WriteLine("FieldType       : {0}", fi[i].FieldType);
+                    fi[i].SetValue(dynamicVariablesObject, "test");
+                }
 
-    //            Console.WriteLine("Fields with value:");
-    //            for (int i = 0; i < fi.Length; i++)
-    //            {
-    //                Console.WriteLine("Name            : {0}", fi[i].Name);
-    //                Console.WriteLine("Value           : {0}", fi[i].GetValue(dynamicVariablesObject));
-    //                Console.WriteLine("Declaring Type  : {0}", fi[i].DeclaringType);
-    //                Console.WriteLine("IsPublic        : {0}", fi[i].IsPublic);
-    //                Console.WriteLine("MemberType      : {0}", fi[i].MemberType);
-    //                Console.WriteLine("FieldType       : {0}", fi[i].FieldType);
-    //            }
-    //        }
-    //        catch (Exception e)
-    //        {
-    //            Console.WriteLine("Exception Caught " + e.Message);
-    //        }
-    //    }
-    //}
+                Console.WriteLine("Fields with value:");
+                for (int i = 0; i < fi.Length; i++)
+                {
+                    Console.WriteLine("Name            : {0}", fi[i].Name);
+                    Console.WriteLine("Value           : {0}", fi[i].GetValue(dynamicVariablesObject));
+                    Console.WriteLine("Declaring Type  : {0}", fi[i].DeclaringType);
+                    Console.WriteLine("IsPublic        : {0}", fi[i].IsPublic);
+                    Console.WriteLine("MemberType      : {0}", fi[i].MemberType);
+                    Console.WriteLine("FieldType       : {0}", fi[i].FieldType);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception Caught " + e.Message);
+            }
+        }
+    }
+    */
 
 }

@@ -42,5 +42,6 @@ namespace Ocugine_SDK.Models{
         public string app_name = "";        // Application Name
         public string app_desc = "";        // Application Desc
         public string app_version = "";     // Application Version
+        public string app_path = "";        // Application path
     }
 }

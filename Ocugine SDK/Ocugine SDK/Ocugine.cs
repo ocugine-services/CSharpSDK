@@ -86,6 +86,13 @@ namespace Ocugine_SDK
             // Set Params to Ocugine SDK
             application = app_settings;             // Set Application Settings
 
+            // Create directory
+            if(application.app_path == "" && application.app_key != "")
+            {
+                application.app_path = Environment.ExpandEnvironmentVariables(@"%appdata%\" + $"Ocugine_{application.app_key}");                
+            }
+            Directory.CreateDirectory(application.app_path);
+
             // Set SDK Settings
             if (sdk_settings != null){ // Has SDK Settings
                 settings = sdk_settings; // Set SDK Settings
@@ -1262,8 +1269,9 @@ namespace Ocugine_SDK
         //  @class      UI
         //  @method     DownloadContent()
         //  @type       Static Async Void
-        //  @usage      Get token by Oauth protocol
-        //  @args       (string / string[]) grants - Grants for project
+        //  @usage      Download content
+        //  @args       (double) cid - Id of content
+        //              (string) path - [Optional] set downloading path 
         //              (void) complete - Complete Callback
         //              (void) error - Error Callback
         //  @return     none
@@ -1272,8 +1280,13 @@ namespace Ocugine_SDK
         public delegate void OnContentDownloadError(string code);
         public async void DownloadContent(double cid, string path, OnContentDownloadSuccsess complete, OnContentDownloadError error) // Get and return login form with all permissions
         {
-            /** checking Backend module **/
+            /** Read path and download content **/
             await DownloadContentAsync(cid, path, complete, error);
+        }
+        public async void DownloadContent(double cid, OnContentDownloadSuccsess complete, OnContentDownloadError error) // Get and return login form with all permissions
+        {
+            /** Get path from settings and download **/
+            await DownloadContentAsync(cid, sdk_instance.application.app_path, complete, error);
         }
         private async Task<bool> DownloadContentAsync(double cid, string path, OnContentDownloadSuccsess complete, OnContentDownloadError error) // Get and return login form with all permissions
         {
@@ -1310,7 +1323,7 @@ namespace Ocugine_SDK
                             }
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     switch (sdk_instance.settings.language)
                     {
