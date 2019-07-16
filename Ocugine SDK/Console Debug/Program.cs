@@ -64,7 +64,7 @@ namespace Console_Debug
             //SDK.backend.GetContent(1, (ContentInfo o) => { Console.WriteLine($"{o.data.info.content_size} {o.data.info.content_slug} {o.data.info.content_url}"); }, (string s) => { Console.WriteLine(s); });
 
             /** Тест загрузки контента **/
-            SDK.ui.DownloadContent(1, (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); }); // , @"C:\IBS\"
+            //SDK.ui.DownloadContent(1, (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); }); // , @"C:\IBS\"
 
             /** Тест получения списка пользователей, текущего пользователя, пользователя по ID, выборки  **/
             //SDK.users.GetUsersList(1, (UsersListInfo o) => { Console.WriteLine("[U] Get User List:"); foreach (UserInfo.SubModel.BaseData d in o.data.list) Console.WriteLine($"[U] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
@@ -82,7 +82,7 @@ namespace Console_Debug
             /** Тест установки группы, получения списка групп и конкретной группы **/
             //SDK.users.SetGroup((string s) => Console.WriteLine(s), (string e) => Console.WriteLine(e));
             //SDK.users.GetGroupList((GroupListInfo s) => { foreach (GroupInfo.SubModel M in s.data.list) Console.WriteLine($"[{M.uid}] {M.group_name}"); }, (string e) => Console.WriteLine(e));
-            //SDK.users.GetGroupData(1, (GroupInfo s) => { Console.WriteLine($"{s.data.group_desc}"); }, (string e) => Console.WriteLine(e));
+            SDK.users.GetGroupData(1, (GroupInfo s) => { Console.WriteLine($"{s.data.group_desc}"); }, (string e) => Console.WriteLine(e));
 
 
             //

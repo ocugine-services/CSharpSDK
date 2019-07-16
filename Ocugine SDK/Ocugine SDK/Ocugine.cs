@@ -91,6 +91,10 @@ namespace Ocugine_SDK
             {
                 application.app_path = Environment.ExpandEnvironmentVariables(@"%appdata%\" + $"Ocugine_{application.app_key}");                
             }
+            else if(application.app_path == "" && application.app_key == "")
+            {
+                throw new Exception("Application key can not be empty");
+            }
             Directory.CreateDirectory(application.app_path);
 
             // Set SDK Settings
@@ -1327,8 +1331,8 @@ namespace Ocugine_SDK
                 {
                     switch (sdk_instance.settings.language)
                     {
-                        case "RU": { error($"Ошибка при загрузке файла, проверьте правильность пути"); } break;
-                        default: { error("An error occured while downloading file, check path"); } break;
+                        case "RU": { error($"Ошибка при загрузке файла, проверьте правильность пути \n{e}"); } break;
+                        default: { error($"An error occured while downloading file, check path \n{e}"); } break;
                     }
                     return false;
                 }

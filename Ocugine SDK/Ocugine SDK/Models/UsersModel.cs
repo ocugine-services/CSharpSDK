@@ -147,9 +147,13 @@ namespace Ocugine_SDK.Models
             public string group_name = "";
             public string group_desc = "";
             public string time = "";
-            public bool conditions = false;
-            public string can_select = "";
+            public ConditionsData[] conditions;
+            public bool can_select = false;
             public string auto_detect = "";
+        }
+
+        public class ConditionsData
+        {
 
         }
     }
