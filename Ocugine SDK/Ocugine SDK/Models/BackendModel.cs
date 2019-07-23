@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 //===================================================
 namespace Ocugine_SDK.Models
 {
+    [Serializable]
     public class BackendModel
     {
 
@@ -31,12 +32,17 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Content List Model
     //===================================================
+    [Serializable]
     public class ContentListInfo : BaseModel
     {
         public SubModel data;
+
+        [Serializable]
         public class SubModel
         {
             public ListModel[] list;
+
+            [Serializable]
             public class ListModel
             {
                 public double uid = 0;
@@ -50,13 +56,18 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Content Model
     //===================================================
+    [Serializable]
     public class ContentInfo : BaseModel
     {
         public SubModel data;
+
+        [Serializable]
         public class SubModel
         {
             // Модель инфо
             public InfoModel info;
+
+            [Serializable]
             public class InfoModel
             {
                 public double uid = 0;

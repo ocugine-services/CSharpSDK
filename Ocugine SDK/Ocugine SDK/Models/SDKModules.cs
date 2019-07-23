@@ -24,6 +24,7 @@ namespace Ocugine_SDK.Models{
     //===================================================
     //  Ocugine SDK Working Mode Type
     //===================================================
+    [Serializable]
     public enum SDKModules{
         All, Auth, Analytics, GameServices, Payments, Notifications, Marketing, Ads, Backend, Reporting, Performance, Backoffice, Localization, Users, UI, Utils
     }

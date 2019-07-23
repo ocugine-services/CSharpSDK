@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 //===================================================
 namespace Ocugine_SDK.Models
 {
+    [Serializable]
     public class UtilsModel
     {
 
@@ -31,13 +32,18 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Policy List Model
     //===================================================
+    [Serializable]
     public class APISettingsInfo : BaseModel
     {
         public SubModel data;
+
+        [Serializable]
         public class SubModel
         {
             // Модель инфо
             public ConfingsModel configs;
+
+            [Serializable]
             public class ConfingsModel
             {
                 public double uid = 0;

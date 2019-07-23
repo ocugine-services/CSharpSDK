@@ -22,11 +22,12 @@ using System.Threading.Tasks;
 //  Namespace Ocugine SDK
 //===================================================
 
-namespace Ocugine_SDK.Models{   
+namespace Ocugine_SDK.Models{
 
     //===================================================
     //  Ocugine SDK Authentication Model
     //===================================================
+    [Serializable]
     public class AuthenticationModel{
         public double uid = 0;              // Authentication UID
         public bool is_auth = false;        // Authentication Status
@@ -40,6 +41,7 @@ namespace Ocugine_SDK.Models{
     //===================================================
     //  Ocugine SDK Profile Model
     //===================================================
+    [Serializable]
     public class ProfileModel{
         public double uid = 0;              // Profile (Account) UID
         public string first_name = "";      // First Name
@@ -53,6 +55,7 @@ namespace Ocugine_SDK.Models{
     //===================================================
     //  Ocugine SDK Profile Data Model
     //===================================================
+    [Serializable]
     public class profileData{
 
     }
@@ -60,6 +63,7 @@ namespace Ocugine_SDK.Models{
     //===================================================
     //  Ocugine SDK Viewer Model
     //===================================================
+    [Serializable]
     public class ViewerModel{
         public double uid = 0;              // Viewer UID
         public string ip = "";              // Viewer IP
@@ -74,10 +78,12 @@ namespace Ocugine_SDK.Models{
     //===================================================
     //  Ocugine SDK OAuth Model
     //===================================================
+    [Serializable]
     public class OAuthModel : BaseModel
     {
         public SubModel data;
 
+        [Serializable]
         public class SubModel
         {
             public double app_id = 0;           // Project ID
@@ -89,10 +95,12 @@ namespace Ocugine_SDK.Models{
     //===================================================
     //  Ocugine SDK OAuth Token Model
     //===================================================
+    [Serializable]
     public class OAuthTokenModel : BaseModel
     {
         public SubModel data;
 
+        [Serializable]
         public class SubModel
         {
             public string access_token = "";    // Access token

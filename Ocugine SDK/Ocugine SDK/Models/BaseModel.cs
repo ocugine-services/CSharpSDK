@@ -25,6 +25,7 @@ namespace Ocugine_SDK.Models{
     //===================================================
     //  Ocugine SDK Base Response Model
     //===================================================
+    [Serializable]
     public class BaseModel{
         public bool complete;       // Operation Status
         public string message;      // Error Message (if complete=false)

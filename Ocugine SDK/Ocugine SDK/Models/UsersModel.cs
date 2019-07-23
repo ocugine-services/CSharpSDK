@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 //===================================================
 namespace Ocugine_SDK.Models
 {
+    [Serializable]
     public class UsersModel
     {
 
@@ -31,9 +32,12 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Users List Model
     //===================================================
+    [Serializable]
     public class UsersListInfo : BaseModel
     {
         public SubModel data;
+
+        [Serializable]
         public class SubModel
         {
             // Модель инфо
@@ -44,18 +48,22 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Users Model
     //===================================================
+    [Serializable]
     public class UserInfo : BaseModel
     {
         public SubModel data;
 
+        [Serializable]
         public class SubModel
         {
             public BaseData base_data;
 
             #warning StillNotImplemented
+            //TODO Implement this
             public AdvancedData advanced_data;
             public GroupData group_data;
 
+            [Serializable]
             public class BaseData
             {
                 public string uid = "";
@@ -67,11 +75,13 @@ namespace Ocugine_SDK.Models
                 public string profile_type = "";
             }
 
+            [Serializable]
             public class AdvancedData
             {
 
             }
 
+            [Serializable]
             public class GroupData
             {
                 
@@ -82,13 +92,18 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Policy List Model
     //===================================================
+    [Serializable]
     public class PolicyListInfo : BaseModel
     {
         public SubModel data;
+
+        [Serializable]
         public class SubModel
         {
             // Модель инфо
             public ListModel[] list;
+
+            [Serializable]
             public class ListModel
             {
                 public string policy_name = "";
@@ -102,13 +117,18 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Policy Info Model
     //===================================================
+    [Serializable]
     public class PolicyInfo : BaseModel
     {
         public SubModel data;
+
+        [Serializable]
         public class SubModel
         {
             // Модель инфо
             public InfoModel info;
+
+            [Serializable]
             public class InfoModel
             {
                 public int uid = 0;
@@ -124,10 +144,12 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Groups List Model
     //===================================================
+    [Serializable]
     public class GroupListInfo : BaseModel
     {
         public SubModel data;
 
+        [Serializable]
         public class SubModel
         {
             public GroupInfo.SubModel[] list;
@@ -137,9 +159,12 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Groups Info Model
     //===================================================
+    [Serializable]
     public class GroupInfo : BaseModel
     {
         public SubModel data;
+
+        [Serializable]
         public class SubModel
         {
             public string uid = "";
@@ -152,6 +177,7 @@ namespace Ocugine_SDK.Models
             public string auto_detect = "";
         }
 
+        [Serializable]
         public class ConditionsData
         {
 

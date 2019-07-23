@@ -22,9 +22,11 @@ using System.Threading.Tasks;
 //  Namespace Ocugine SDK
 //===================================================
 namespace Ocugine_SDK.Models{
+
     //===================================================
     //  Ocugine SDK State Model
     //===================================================
+    [Serializable]
     public class StateModel : BaseModel{
         public StateData data;
     }
@@ -32,6 +34,7 @@ namespace Ocugine_SDK.Models{
     //===================================================
     //  Ocugine SDK State Data
     //===================================================
+    [Serializable]
     public class StateData{
         public string version = "";         // API Version
         public double build = 0;            // API Build
@@ -42,11 +45,14 @@ namespace Ocugine_SDK.Models{
     //===================================================
     //  Ocugine SDK API Status Data
     //===================================================
+    [Serializable]
     public class APIState{
         public int dashboard = 0;               // Dashboard State
         public APIServicesState services;       // Services State
         public APISDKState sdk;                 // SDK State
     }
+
+    [Serializable]
     public class APIServicesState{
         public APIServicesUsersState users;     // Users State
         public APIServicesAnalyticsState analytics; // Analytics State
@@ -59,6 +65,8 @@ namespace Ocugine_SDK.Models{
         public APIServicesLocalizationState localization;   // Localization Services State
         public APIServicesOtherState other;     // Other Services State
     }
+
+    [Serializable]
     public class APIServicesUsersState{
         public int auth = 0;                    // Auth Module
         public int lists = 0;                   // Lists Module
@@ -70,22 +78,30 @@ namespace Ocugine_SDK.Models{
         public int policy = 0;                  // Policy Module
         public int settings = 0;                // Settings Module
     }
+
+    [Serializable]
     public class APIServicesAnalyticsState{
         public int general = 0;                 // General Analytics Module
         public int user_tracking = 0;           // Users Tracking Module
         public int events = 0;                  // Events Module
         public int funnels = 0;                 // Funnels Module
     }
+
+    [Serializable]
     public class APIServicesMarketingState{
         public int tools = 0;                   // General Marketing Tools
         public int promo = 0;                   // Promo Tools
         public int ab = 0;                      // AB Tools
         public int aso = 0;                     // ASO Tools
     }
+
+    [Serializable]
     public class APIServicesAdsState{
         public int exchange = 0;                // Traffic Exchange Module
         public int ads = 0;                     // Ads Module
     }
+
+    [Serializable]
     public class APIServicesGamingState{
         public int leaderboards = 0;            // Leaderboards Module
         public int achivements = 0;             // Achivements Module
@@ -97,6 +113,8 @@ namespace Ocugine_SDK.Models{
         public int cross_play = 0;              // Cross Play Module
         public int missions = 0;                // Missions Module
     }
+
+    [Serializable]
     public class APIServicesCloudState{
         public int content = 0;                 // Content Delivery Module
         public int databases = 0;               // Databases Module
@@ -106,6 +124,8 @@ namespace Ocugine_SDK.Models{
         public int reporting = 0;               // Reporting Module
         public int perfomance = 0;              // Perfomance Module
     }
+
+    [Serializable]
     public class APIServicesOfficeState{
         public int chating = 0;                 // Office Chating Module
         public int notifications = 0;           // Notifications Module
@@ -115,6 +135,8 @@ namespace Ocugine_SDK.Models{
         public int payments = 0;                // Payments Module
         public int settings = 0;                // Office Settings Module
     }
+
+    [Serializable]
     public class APIServicesReportsState{
         public int payouts = 0;                 // Payouts Reporting Module
         public int errors = 0;                  // Errors Reporting Module
@@ -122,10 +144,14 @@ namespace Ocugine_SDK.Models{
         public int perfomance = 0;              // Perfomance Reporting Module
         public int custom = 0;                  // Custom Reporting Module
     }
+
+    [Serializable]
     public class APIServicesLocalizationState{
         public int manager = 0;                 // Localization Manager Module
         public int languages = 0;               // Languages Module
     }
+
+    [Serializable]
     public class APIServicesOtherState{
         public int integrations = 0;            // Integrations Module
         public int sdk = 0;                     // SDK Module
@@ -133,6 +159,8 @@ namespace Ocugine_SDK.Models{
         public int api_manager = 0;             // API Manager Module
         public int engine = 0;                  // Engine Module
     }
+
+    [Serializable]
     public class APISDKState{
         public int net = 0;                     // NET SDK State
         public int unity = 0;                   // Unity SDK

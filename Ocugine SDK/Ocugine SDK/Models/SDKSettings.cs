@@ -26,6 +26,7 @@ namespace Ocugine_SDK.Models{
     //===================================================
     //  Ocugine SDK Settings
     //===================================================
+    [Serializable]
     public class SDKSettings{
         // General Settings
         public string language = "";           // SDK Language
@@ -36,6 +37,7 @@ namespace Ocugine_SDK.Models{
     //===================================================
     //  Ocugine Application Settings
     //===================================================
+    [Serializable]
     public class AppSettings{
         public double app_id = 0;           // Application ID
         public string app_key = "";         // Application Key

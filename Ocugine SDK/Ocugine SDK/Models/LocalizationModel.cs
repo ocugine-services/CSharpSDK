@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 //===================================================
 namespace Ocugine_SDK.Models
 {
+    [Serializable]
     public class LocalizationModel
     {
 
@@ -31,10 +32,12 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Language Info Model
     //===================================================
+    [Serializable]
     public class LanguageInfo : BaseModel
     {
         public SubModel data;
 
+        [Serializable]
         public class SubModel
         {
             public string uid = "";            // Locale language id
@@ -48,6 +51,7 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Language List Model
     //===================================================
+    [Serializable]
     public class LanguageListInfo : BaseModel
     {
         public List<LanguageInfo.SubModel> data;
@@ -56,10 +60,12 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Locale Info Model
     //===================================================
+    [Serializable]
     public class LocaleInfo : BaseModel
     {
         public SubModel data;
 
+        [Serializable]
         public class SubModel
         {
             public string uid = "";            // Locale id
@@ -73,6 +79,7 @@ namespace Ocugine_SDK.Models
     //===================================================
     //  Ocugine Locale List Model
     //===================================================
+    [Serializable]
     public class LocaleListInfo : BaseModel
     {
         public Dictionary<string, LocaleInfo.SubModel[]> data;

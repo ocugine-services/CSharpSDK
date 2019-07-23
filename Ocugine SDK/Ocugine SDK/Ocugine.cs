@@ -33,6 +33,7 @@ namespace Ocugine_SDK
     //===================================================
     //  Ocugine SDK General Class
     //===================================================
+    [Serializable]
     public class Ocugine{
         // General Class Constants
         public const string PROTOCOL = "https://";      // Requests Protocol
