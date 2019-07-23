@@ -174,7 +174,7 @@ namespace Ocugine_SDK.Models
             public string time = "";
             public ConditionsData[] conditions;
             public bool can_select = false;
-            public string auto_detect = "";
+            public bool auto_detect = false;
         }
 
         [Serializable]
