@@ -651,10 +651,11 @@ namespace Ocugine_SDK
         
         // Private Class Params
         private Ocugine sdk_instance; // SDK Instance
-        private Dictionary<string, LanguageInfo> LangInfoCache = new Dictionary<string, LanguageInfo>(); // Languahe cache
-        private List<LanguageInfo.SubModel> LangListCache = new List<LanguageInfo.SubModel>(); // Languahe list cache
+        private Dictionary<string, LanguageInfo> LangInfoCache = new Dictionary<string, LanguageInfo>(); // Languahe cache        
         private Dictionary<string, Dictionary<string, LocaleInfo>> LocInfoCache = new Dictionary<string, Dictionary<string, LocaleInfo>>(); // Localization cache
-        private Dictionary<string, LocaleInfo.SubModel[]> LocListCache = new Dictionary<string, LocaleInfo.SubModel[]>(); // Localization list cache
+        //
+        private LanguageListInfo.SubModel LangListCache = new LanguageListInfo.SubModel(); // Languahe list cache
+        private LocaleListInfo.SubModel LocListCache = null; // Localization list cache
 
         //============================================================
         //  @class      Localization
@@ -728,7 +729,7 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetLangListAsync(OnGetLangListComplete complete, OnGetLangListError error) // (bool) Get locale
         {
-            if (LangListCache.Count != 0) // If has lang and locale in thot lang
+            if (LangListCache.list != null) // If has lang and locale in thot lang
             {
                 complete(new LanguageListInfo() { message = "Cache", data = LangListCache });
                 return true;
@@ -816,7 +817,7 @@ namespace Ocugine_SDK
         }
         public async Task<bool> GetLocaleListAsync(OnGetLocaleListComplete complete, OnGetLocaleListError error) // (bool) Get locale
         {
-            if (LocListCache.Count != 0) // If has lang and locale in thot lang
+            if (LocListCache != null) // If has lang and locale in thot lang
             {
                 complete(new LocaleListInfo() { message = "Cache", data = LocListCache });
                 return true;
@@ -1399,7 +1400,7 @@ namespace Ocugine_SDK
                         return false;
                     }
                 } catch (Exception ex){ // Failed to decode data
-                    error(ex.Message+ex.StackTrace); // Show Error
+                    error("[Message]: " + ex.Message+"\n[StackTrace]: "+ex.StackTrace+"\n[JSON]: "+json+" "); // Show Error
                     return false;
                 }
             } catch (Exception ex){ // Failed to send request
