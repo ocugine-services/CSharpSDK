@@ -23,8 +23,8 @@ namespace Console_Debug
             Ocugine SDK = new Ocugine(new AppSettings
             {
                 app_path = "C:/ICS",
-                app_id = 1,
-                app_key = "c46361ae80c1679d637c2f23968a4dc5d5ea2a65"
+                app_id = 41,
+                app_key = "9e7ef73643555be6e9cc38295e0ea5d4dcd21d10"
             }, new SDKSettings
             {
                 language = "RU",
@@ -82,7 +82,7 @@ namespace Console_Debug
             /** Тест установки группы, получения списка групп и конкретной группы **/
             //SDK.users.SetGroup((string s) => Console.WriteLine(s), (string e) => Console.WriteLine(e));
             //SDK.users.GetGroupList((GroupListInfo s) => { foreach (GroupInfo.SubModel M in s.data.list) Console.WriteLine($"[{M.uid}] {M.group_name}"); }, (string e) => Console.WriteLine(e));
-            SDK.users.GetGroupData(1, (GroupInfo s) => { Console.WriteLine($"{s.data.group_desc}"); }, (string e) => Console.WriteLine(e));
+            //SDK.users.GetGroupData(-1, (GroupInfo s) => { Console.WriteLine($"{s.data.group_desc}"); }, (string e) => Console.WriteLine(e));
 
 
             //
