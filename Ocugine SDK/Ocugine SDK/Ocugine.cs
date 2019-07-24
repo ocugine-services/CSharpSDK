@@ -957,7 +957,9 @@ namespace Ocugine_SDK
                     });
             return await sdk_instance.utils.sendRequest(Ocugine.PROTOCOL + Ocugine.SERVER + Ocugine.API_GATE + Ocugine.USERS_OBJECT + "/get_user_data", formContent,
                 ((string data) => { // Response
+                    // TODO: Fix this model
                     UserInfo state = JsonConvert.DeserializeObject<UserInfo>(data); // Deserialize Object
+                    //throw new StackOverflowException();
                     complete(state); // Return Data                       
                 }),
             ((string code) => { // Error

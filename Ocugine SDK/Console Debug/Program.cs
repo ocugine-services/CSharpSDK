@@ -40,46 +40,47 @@ namespace Console_Debug
             //SDK.auth.GetLink((string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); }, new string[] { "all", "you", "need" });
 
             /** Тест получения токена **/
-            SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine("[TOKEN]: " + SDK.auth.credentials.token + "\n"); }, (string s) => { Console.WriteLine(s); });
+            //SDK.auth.GetToken((OAuthTokenModel o) => { Console.WriteLine("[TOKEN]: " + SDK.auth.credentials.token + "\n"); }, (string s) => { Console.WriteLine(s); });
 
-            /** Тест логаута **/
-            //SDK.auth.GetToken((OAuthTokenModel o) => { 
+            ///** Тест логаута **/
+            //SDK.auth.GetToken((OAuthTokenModel o) =>
+            //{
             //    Console.WriteLine(SDK.auth.credentials.token);
             //    SDK.auth.Logout((string ls) => { Console.WriteLine("Успешный логаут"); }, (string lf) => { Console.WriteLine(lf); });
-            //}, (string s) => { Console.WriteLine(s); });           
+            //}, (string s) => { Console.WriteLine(s); });
 
-            /** Тест получения информации о языке и о локали **/
+            ///** Тест получения информации о языке и о локали **/
             //SDK.locale.GetLang("ru", (LanguageInfo o) => { Console.WriteLine($"{o.data.name}"); Console.WriteLine($"{o.message}"); }, (string s) => { Console.WriteLine(s); });
             //SDK.locale.GetLocale("ru", "test-node", (LocaleInfo o) => { Console.WriteLine($"{o.data.value}"); }, (string s) => { Console.WriteLine(s); });
 
-            /** Тест получения списка политик и инфо о политике **/
+            ///** Тест получения списка политик и инфо о политике **/
             //SDK.users.GetPolicyList((PolicyListInfo o) => { foreach (PolicyListInfo.SubModel.ListModel d in o.data.list) Console.WriteLine($"[{d.uid}] - {d.policy_name}"); }, (string s) => { Console.WriteLine("[GET POLICY LIST]\n" + s + "\n"); });
             //SDK.users.GetPolicyInfo(1, (PolicyInfo o) => { Console.WriteLine($"{o.data.info.policy_name} {o.data.info.policy_text}"); }, (string s) => { Console.WriteLine(s); });
 
-            /** Тест получения настроек **/
+            ///** Тест получения настроек **/
             //SDK.utils.GetSettings((APISettingsInfo o) => { Console.WriteLine($"{o.data.configs.uid} {o.data.configs.limitation}"); }, (string s) => { Console.WriteLine(s); });
 
-            /** Тест получения списка контента и инфо о контенте **/
+            ///** Тест получения списка контента и инфо о контенте **/
             //SDK.backend.GetContentList((o) => { foreach (ContentListInfo.SubModel.ListModel d in o.data.list) Console.WriteLine($"{d.content_slug} {d.uid}"); }, (string s) => { Console.WriteLine("[GET CONTENT LIST]\n" + s + "\n"); });
             //SDK.backend.GetContent(1, (ContentInfo o) => { Console.WriteLine($"{o.data.info.content_size} {o.data.info.content_slug} {o.data.info.content_url}"); }, (string s) => { Console.WriteLine(s); });
 
-            /** Тест загрузки контента **/
+            ///** Тест загрузки контента **/
             //SDK.ui.DownloadContent(1, (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); }); // , @"C:\IBS\"
 
-            /** Тест получения списка пользователей, текущего пользователя, пользователя по ID, выборки  **/
+            ///** Тест получения списка пользователей, текущего пользователя, пользователя по ID, выборки  **/
             //SDK.users.GetUsersList(1, (UsersListInfo o) => { Console.WriteLine("[U] Get User List:"); foreach (UserInfo.SubModel.BaseData d in o.data.list) Console.WriteLine($"[U] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine("[GET USER LIST]\n" + s + "\n"); });
-            //SDK.auth.GetToken((OAuthTokenModel o) =>
-            //{
-            //    SDK.users.GetUserData((UserInfo lo) => { Console.WriteLine($"Get Current Mail: {lo.data.base_data.email}"); }, (string ls) => { Console.WriteLine(ls); });
-            //}, (string s) => { Console.WriteLine(s); });
+            SDK.auth.GetToken((OAuthTokenModel o) =>
+            {
+                SDK.users.GetUserData((UserInfo lo) => { Console.WriteLine($"Get Current Mail: {lo.data.base_data.email}"); }, (string ls) => { Console.WriteLine(ls); });
+            }, (string s) => { Console.WriteLine(s); });
             //SDK.users.GetUserByID(17, (UserInfo lo) => { Console.WriteLine($"Get by ID Mail: {lo.data.base_data.email}"); }, (string ls) => { Console.WriteLine(ls); });
             //SDK.users.FindUser("Ocugine", 1, (UsersListInfo o) => { Console.WriteLine("[S] Search user:"); foreach (UserInfo.SubModel.BaseData d in o.data.list) Console.WriteLine($"[S] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
 
-            /** Тест получения списка локалей и языков **/
+            ///** Тест получения списка локалей и языков **/
             //SDK.locale.GetLocaleList((LocaleListInfo o) => { Console.WriteLine($"{o.data.list[0].locales[0].value}"); }, (string s) => { Console.WriteLine("[GET LOCALE LIST]\n" + s + "\n"); });
             //SDK.locale.GetLangList((LanguageListInfo o) => { Console.WriteLine($"{o.data.list[0].name}"); }, (string s) => { Console.WriteLine("[GET LANG LIST]\n" + s + "\n"); });
 
-            /** Тест установки группы, получения списка групп и конкретной группы **/
+            ///** Тест установки группы, получения списка групп и конкретной группы **/
             //SDK.users.SetGroup((string s) => Console.WriteLine(s), (string e) => Console.WriteLine("[SET GROUP] " + e + "\n"));
             //SDK.users.GetGroupList((GroupListInfo s) => { foreach (GroupInfo.SubModel M in s.data.list) Console.WriteLine($"[{M.uid}] {M.group_name}"); }, (string e) => Console.WriteLine(e));
             //SDK.users.GetGroupData(-1, (GroupInfo s) => { Console.WriteLine($"{s.data.group_desc}"); }, (string e) => Console.WriteLine(e));
