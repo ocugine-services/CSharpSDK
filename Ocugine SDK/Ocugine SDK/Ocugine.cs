@@ -371,7 +371,7 @@ namespace Ocugine_SDK
     public class Analytics{
 
         // Private Class Params
-        private readonly Ocugine sdk_instance;            // SDK Instance
+        private Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Analytics
@@ -392,7 +392,7 @@ namespace Ocugine_SDK
     public class GameServices{
 
         // Private Class Params
-        private readonly Ocugine sdk_instance;            // SDK Instance
+        private Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      GameServices
@@ -413,7 +413,7 @@ namespace Ocugine_SDK
     public class Payments{
 
         // Private Class Params
-        private readonly Ocugine sdk_instance;            // SDK Instance
+        private Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Payments
@@ -434,7 +434,7 @@ namespace Ocugine_SDK
     public class Notifications{
 
         // Private Class Params
-        private readonly Ocugine sdk_instance;            // SDK Instance
+        private Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Notifications
@@ -455,7 +455,7 @@ namespace Ocugine_SDK
     public class Marketing{
 
         // Private Class Params
-        private readonly Ocugine sdk_instance;            // SDK Instance
+        private Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Marketing
@@ -476,7 +476,7 @@ namespace Ocugine_SDK
     public class Ads{
 
         // Private Class Params
-        private readonly Ocugine sdk_instance;            // SDK Instance
+        private Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Ads
@@ -587,7 +587,7 @@ namespace Ocugine_SDK
     public class Reporting{
 
         // Private Class Params
-        private readonly Ocugine sdk_instance;            // SDK Instance
+        private Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Reporting
@@ -608,7 +608,7 @@ namespace Ocugine_SDK
     public class Performance{
 
         // Private Class Params
-        private readonly Ocugine sdk_instance;            // SDK Instance
+        private Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Performance
@@ -629,7 +629,7 @@ namespace Ocugine_SDK
     public class Backoffice{
 
         // Private Class Params
-        private readonly Ocugine sdk_instance;            // SDK Instance
+        private Ocugine sdk_instance;            // SDK Instance
 
         //============================================================
         //  @class      Backoffice
@@ -1102,8 +1102,9 @@ namespace Ocugine_SDK
         //  @method     GetGroupData()
         //  @type       Static Void
         //  @usage      Get user group data
-        //  @args       (void) complete - Complete Callback
-        //              (void) error - Error Callback
+        //  @args       (double) group_id - Id of group
+        //              (void) complete - Complete Callback
+        //              (void) error - Error Callback     
         //  @return     none
         //============================================================
         public delegate void OnGetGroupDataSuccess(GroupInfo data); // Returns OAuthTokenModel

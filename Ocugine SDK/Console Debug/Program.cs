@@ -68,13 +68,13 @@ namespace Console_Debug
             //SDK.ui.DownloadContent(1, (string o) => { Console.WriteLine(o); }, (string s) => { Console.WriteLine(s); }); // , @"C:\IBS\"
 
             ///** Тест получения списка пользователей, текущего пользователя, пользователя по ID, выборки  **/
-            //SDK.users.GetUsersList(1, (UsersListInfo o) => { Console.WriteLine("[U] Get User List:"); foreach (UserInfo.SubModel.BaseData d in o.data.list) Console.WriteLine($"[U] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine("[GET USER LIST]\n" + s + "\n"); });
-            SDK.auth.GetToken((OAuthTokenModel o) =>
-            {
-                SDK.users.GetUserData((UserInfo lo) => { Console.WriteLine($"Get Current Mail: {lo.data.base_data.email}"); }, (string ls) => { Console.WriteLine(ls); });
-            }, (string s) => { Console.WriteLine(s); });
+            //SDK.users.GetUsersList(1, (UsersListInfo o) => { Console.WriteLine("[U] Get User List:"); foreach (UsersListInfo.SubModel.ListModel d in o.data.list) Console.WriteLine($"[U] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine("[GET USER LIST]\n" + s + "\n"); });
+            //SDK.auth.GetToken((OAuthTokenModel o) =>
+            //{
+            //    SDK.users.GetUserData((UserInfo lo) => { Console.WriteLine($"Get Current Mail: {lo.data.base_data.email}"); }, (string ls) => { Console.WriteLine(ls); });
+            //}, (string s) => { Console.WriteLine(s); });
             //SDK.users.GetUserByID(17, (UserInfo lo) => { Console.WriteLine($"Get by ID Mail: {lo.data.base_data.email}"); }, (string ls) => { Console.WriteLine(ls); });
-            //SDK.users.FindUser("Ocugine", 1, (UsersListInfo o) => { Console.WriteLine("[S] Search user:"); foreach (UserInfo.SubModel.BaseData d in o.data.list) Console.WriteLine($"[S] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
+            //SDK.users.FindUser("Илья", 1, (UsersListInfo o) => { Console.WriteLine("[S] Search user:"); foreach (UsersListInfo.SubModel.ListModel d in o.data.list) Console.WriteLine($"[S] [{d.uid}] - {d.first_name}"); }, (string s) => { Console.WriteLine(s); });
 
             ///** Тест получения списка локалей и языков **/
             //SDK.locale.GetLocaleList((LocaleListInfo o) => { Console.WriteLine($"{o.data.list[0].locales[0].value}"); }, (string s) => { Console.WriteLine("[GET LOCALE LIST]\n" + s + "\n"); });

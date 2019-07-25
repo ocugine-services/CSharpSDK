@@ -41,7 +41,26 @@ namespace Ocugine_SDK.Models
         public class SubModel
         {
             // Модель инфо
-            public UserInfo.SubModel.BaseData[] list;
+            public ListModel[] list;
+
+            [Serializable]
+            public class ListModel
+            {
+                public double uid = 0;
+                public string first_name = "";
+                public string last_name = "";
+                public string avatar = "";
+                public string email = "";
+                public ProfileDataModel[] profile_data;
+                public int profile_type = 1;
+                public double group_id = -1;
+
+                [Serializable]
+                public class ProfileDataModel
+                {
+                    // TODO: Implement this by model
+                }
+            }
         }
     }
 
@@ -58,7 +77,6 @@ namespace Ocugine_SDK.Models
         {
             public BaseData base_data;
 
-            #warning StillNotImplemented
             //TODO Implement this
             public AdvancedData advanced_data;
             public GroupData group_data;
@@ -66,13 +84,13 @@ namespace Ocugine_SDK.Models
             [Serializable]
             public class BaseData
             {
-                public string uid = "";
+                public double uid = 0;
                 public string first_name = "";
                 public string last_name = "";
                 public string avatar = "";
                 public string email = "";
                 public bool profile_data = false;
-                public string profile_type = "";
+                public int profile_type = 0;
             }
 
             [Serializable]
@@ -84,7 +102,7 @@ namespace Ocugine_SDK.Models
             [Serializable]
             public class GroupData
             {
-                
+
             }
         }
     }
@@ -107,7 +125,7 @@ namespace Ocugine_SDK.Models
             public class ListModel
             {
                 public string policy_name = "";
-                public int uid = 0;                
+                public int uid = 0;
                 public string time = "";
             }
 
@@ -137,7 +155,7 @@ namespace Ocugine_SDK.Models
                 public string project_id = "";
                 public string time = "";
             }
-            
+
         }
     }
 
@@ -180,7 +198,7 @@ namespace Ocugine_SDK.Models
         [Serializable]
         public class ConditionsData
         {
-
+            //TODO: Implement this
         }
     }
 

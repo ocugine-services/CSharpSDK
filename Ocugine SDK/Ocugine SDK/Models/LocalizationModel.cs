@@ -59,7 +59,7 @@ namespace Ocugine_SDK.Models
         [Serializable]
         public class SubModel
         {
-            public List<LanguageInfo.SubModel> list;
+            public LanguageInfo.SubModel[] list;
         }
     }
 
@@ -93,13 +93,13 @@ namespace Ocugine_SDK.Models
         [Serializable]
         public class SubModel
         {
-            public List<ListModel> list;
+            public ListModel[] list;
 
             [Serializable]
             public class ListModel
             {
                 public string lang_name = "";
-                public List<LocaleInfo.SubModel> locales;
+                public LocaleInfo.SubModel[] locales;
             }
         }
     }
