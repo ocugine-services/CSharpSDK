@@ -54,11 +54,23 @@ namespace Ocugine_SDK.Models
                 public ProfileDataModel[] profile_data;
                 public int profile_type = 1;
                 public double group_id = -1;
+                public BanStateData banstate;
 
                 [Serializable]
                 public class ProfileDataModel
                 {
                     // TODO: Implement this by model
+                }
+
+                [Serializable]
+                public class BanStateData
+                {
+                    public double uid = 0;
+                    public double profile_uid = 0;
+                    public double project_uid = 0;
+                    public bool ban_state = 0;
+                    public double ban_escape = 0;
+                    public string ban_reason = 0;
                 }
             }
         }
